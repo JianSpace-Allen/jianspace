@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JIANSPACE</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-smiley-sans-oblique-regular/font.css">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: #0a0a0a;
+  color: #aaa;
+  font-family: "Smiley Sans Oblique", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ====== sidebar ====== */
+aside {
+  position: fixed;
+  left: 0; top: 0; bottom: 0;
+  width: 180px;
+  background: #0d0d0d;
+  border-right: 1px solid #1a1a1a;
+  padding: 2.5rem 1.5rem;
+  overflow-y: auto;
+  z-index: 100;
+}
+aside h1 {
+  font-size: 1.4rem;
+  letter-spacing: 0.15em;
+  color: #8B5CF6;
+  margin-bottom: 2rem;
+}
+aside nav a {
+  display: block;
+  color: #666;
+  text-decoration: none;
+  padding: 0.5rem 0;
+  font-size: 0.95rem;
+  transition: color 0.15s;
+  letter-spacing: 0.05em;
+}
+aside nav a:hover,
+aside nav a.active { color: #fff; }
+
+/* ====== main ====== */
+main {
+  margin-left: 180px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ====== theme bar ====== */
+#themeBar {
+  display: none;
+  padding: 1rem 2rem;
+  background: #0d0d0d;
+  border-bottom: 1px solid #1a1a1a;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+#themeBar.visible { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+#themeBar span.model { color: #8B5CF6; margin-right: 0.5rem; font-size: 0.9rem; }
+#themeBar button {
+  background: #1a1a1a;
+  color: #777;
+  border: 1px solid #2a2a2a;
+  padding: 0.35rem 0.9rem;
+  border-radius: 3px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.85rem;
+  transition: all 0.15s;
+}
+#themeBar button:hover,
+#themeBar button.active { color: #fff; border-color: #8B5CF6; background: #1f1b2e; }
+
+/* ====== masonry grid ====== */
+.masonry {
+  padding: 1.5rem 2rem;
+  columns: 4 250px;
+  column-gap: 0.75rem;
+}
+.masonry .card {
+  break-inside: avoid;
+  margin-bottom: 0.75rem;
+  position: relative;
+  cursor: pointer;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.masonry .card img {
+  width: 100%;
+  display: block;
+  transition: transform 0.3s;
+}
+.masonry .card:hover img { transform: scale(1.03); }
+.masonry .card .overlay {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 1.5rem 0.75rem 0.5rem;
+  background: linear-gradient(transparent, rgba(0,0,0,0.6));
+  color: #ccc;
+  font-size: 0.75rem;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.masonry .card:hover .overlay { opacity: 1; }
+
+/* ====== lightbox ====== */
+.lightbox {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.92);
+  z-index: 1000;
+  align-items: center; justify-content: center;
+}
+.lightbox.active { display: flex; }
+.lightbox img {
+  max-width: 90vw;
+  max-height: 90vh;
+  border-radius: 4px;
+}
+.lightbox .close {
+  position: absolute;
+  top: 1.5rem; right: 1.5rem;
+  color: #fff;
+  font-size: 2rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+/* ====== empty state ====== */
+.empty {
+  grid-column: 1/-1;
+  text-align: center;
+  color: #444;
+  padding: 5rem 1rem;
+  font-size: 1rem;
+}
+</style>
+</head>
+<body>
+
+<!-- ====== sidebar ====== -->
+<aside>
+  <h1>JIANSPACE</h1>
+  <nav>
+    <a href="#" data-model="all" class="active">全部</a>
+    <a href="#" data-model="MK2">MK2</a>
+    <a href="#" data-model="MK3">MK3</a>
+    <a href="#" data-model="胜利鸟">胜利鸟</a>
+    <a href="#" data-model="征服者">征服者</a>
+    <a href="#" data-model="大雷击">大雷击</a>
+    <a href="#" data-model="小雷击">小雷击</a>
+    <a href="#" data-model="猎鹰">猎鹰</a>
+  </nav>
+</aside>
+
+<!-- ====== main ====== -->
+<main>
+  <div id="themeBar">
+    <span class="model"></span>
+    <button data-theme="all" class="active">全部主题</button>
+  </div>
+  <div class="masonry" id="masonry"></div>
+</main>
+
+<div class="lightbox" id="lightbox" onclick="this.classList.remove('active')">
+  <span class="close">&times;</span>
+  <img id="lightboxImg" src="">
+</div>
+
+<script>
+// ====== DATA ======
+const data = [
+  // MK2
+  { model:'MK2', slug:'hayabusa', theme:'隼', colors:'荧光粉+韩国粉', files:5 },
+  { model:'MK2', slug:'hayabusa', theme:'隼', colors:'荧光橙+老虎黄', files:5 },
+  { model:'MK2', slug:'hayabusa', theme:'隼', colors:'紫+薰衣草紫', files:5 },
+  // more models will be added here
+];
+
+function imgPath(d) {
+  const t = d.theme;
+  const c = d.colors;
+  const slug = d.slug || d.model;
+  const base = `images/${slug}/${d.model}-${t}-${c}`;
+  return Array.from({length: d.files}, (_,i) => `${base}${i+1}.webp`);
+}
+
+// ====== STATE ======
+let activeModel = 'all';
+let activeTheme = 'all';
+
+// ====== RENDER ======
+const masonry = document.getElementById('masonry');
+const themeBar = document.getElementById('themeBar');
+const sidebarLinks = document.querySelectorAll('aside nav a');
+
+function getFiltered() {
+  let photos = [];
+  data.forEach(d => {
+    const matchModel = activeModel === 'all' || d.model === activeModel;
+    const matchTheme = activeTheme === 'all' || d.theme === activeTheme;
+    if (matchModel && matchTheme) {
+      imgPath(d).forEach(p => photos.push({ src: p, model: d.model, theme: d.theme, colors: d.colors }));
+    }
+  });
+  // shuffle
+  for (let i = photos.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [photos[i], photos[j]] = [photos[j], photos[i]];
+  }
+  return photos;
+}
+
+function getThemesForModel(model) {
+  const themes = new Set();
+  data.filter(d => d.model === model).forEach(d => themes.add(d.theme));
+  return [...themes];
+}
+
+function renderThemeBar() {
+  if (activeModel === 'all') {
+    themeBar.classList.remove('visible');
+  } else {
+    themeBar.classList.add('visible');
+    themeBar.querySelector('span.model').textContent = activeModel;
+    // build theme buttons
+    const existing = themeBar.querySelectorAll('button');
+    existing.forEach(b => b.remove());
+    const themes = getThemesForModel(activeModel);
+    const allBtn = document.createElement('button');
+    allBtn.dataset.theme = 'all';
+    allBtn.textContent = '全部主题';
+    allBtn.classList.toggle('active', activeTheme === 'all');
+    allBtn.onclick = () => { activeTheme = 'all'; renderAll(); };
+    themeBar.appendChild(allBtn);
+    themes.forEach(t => {
+      const btn = document.createElement('button');
+      btn.dataset.theme = t;
+      btn.textContent = t;
+      btn.classList.toggle('active', activeTheme === t);
+      btn.onclick = () => { activeTheme = t; renderAll(); };
+      themeBar.appendChild(btn);
+    });
+  }
+}
+
+function renderAll() {
+  renderThemeBar();
+  const photos = getFiltered();
+  masonry.innerHTML = '';
+  if (photos.length === 0) {
+    masonry.innerHTML = '<div class="empty">暂无照片，敬请期待</div>';
+    return;
+  }
+  photos.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <img src="${p.src}" alt="${p.model} ${p.theme} ${p.colors}" loading="lazy">
+      <div class="overlay">${p.model} ${p.theme} · ${p.colors}</div>
+    `;
+    card.onclick = () => {
+      document.getElementById('lightboxImg').src = p.src;
+      document.getElementById('lightbox').classList.add('active');
+    };
+    masonry.appendChild(card);
+  });
+}
+
+// ====== SIDEBAR CLICKS ======
+sidebarLinks.forEach(a => {
+  a.onclick = e => {
+    e.preventDefault();
+    activeModel = a.dataset.model;
+    activeTheme = 'all';
+    sidebarLinks.forEach(l => l.classList.remove('active'));
+    a.classList.add('active');
+    renderAll();
+  };
+});
+
+// initial render
+renderAll();
+</script>
+</body>
+</html>

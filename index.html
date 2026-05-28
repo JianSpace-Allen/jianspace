@@ -3,292 +3,209 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JIANSPACE</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource-smiley-sans-oblique-regular/font.css">
+<title>JIANSPACE Logo</title>
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-  background: #0a0a0a;
-  color: #aaa;
-  font-family: "Smiley Sans Oblique", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  display: flex;
-  min-height: 100vh;
-}
-
-/* ====== sidebar ====== */
-aside {
-  position: fixed;
-  left: 0; top: 0; bottom: 0;
-  width: 180px;
-  background: #0d0d0d;
-  border-right: 1px solid #1a1a1a;
-  padding: 2.5rem 1.5rem;
-  overflow-y: auto;
-  z-index: 100;
-}
-aside h1 {
-  font-size: 1.4rem;
-  letter-spacing: 0.15em;
-  color: #8B5CF6;
-  margin-bottom: 2rem;
-}
-aside nav a {
-  display: block;
-  color: #666;
-  text-decoration: none;
-  padding: 0.5rem 0;
-  font-size: 0.95rem;
-  transition: color 0.15s;
-  letter-spacing: 0.05em;
-}
-aside nav a:hover,
-aside nav a.active { color: #fff; }
-
-/* ====== main ====== */
-main {
-  margin-left: 180px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-/* ====== theme bar ====== */
-#themeBar {
-  display: none;
-  padding: 1rem 2rem;
-  background: #0d0d0d;
-  border-bottom: 1px solid #1a1a1a;
-  position: sticky;
-  top: 0;
-  z-index: 50;
-}
-#themeBar.visible { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
-#themeBar span.model { color: #8B5CF6; margin-right: 0.5rem; font-size: 0.9rem; }
-#themeBar button {
-  background: #1a1a1a;
-  color: #777;
-  border: 1px solid #2a2a2a;
-  padding: 0.35rem 0.9rem;
-  border-radius: 3px;
-  cursor: pointer;
-  font-family: inherit;
-  font-size: 0.85rem;
-  transition: all 0.15s;
-}
-#themeBar button:hover,
-#themeBar button.active { color: #fff; border-color: #8B5CF6; background: #1f1b2e; }
-
-/* ====== masonry grid ====== */
-.masonry {
-  padding: 1.5rem 2rem;
-  columns: 4 250px;
-  column-gap: 0.75rem;
-}
-.masonry .card {
-  break-inside: avoid;
-  margin-bottom: 0.75rem;
-  position: relative;
-  cursor: pointer;
-  border-radius: 4px;
-  overflow: hidden;
-}
-.masonry .card img {
-  width: 100%;
-  display: block;
-  transition: transform 0.3s;
-}
-.masonry .card:hover img { transform: scale(1.03); }
-.masonry .card .overlay {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  padding: 1.5rem 0.75rem 0.5rem;
-  background: linear-gradient(transparent, rgba(0,0,0,0.6));
-  color: #ccc;
-  font-size: 0.75rem;
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-.masonry .card:hover .overlay { opacity: 1; }
-
-/* ====== lightbox ====== */
-.lightbox {
-  display: none;
-  position: fixed;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(0,0,0,0.92);
-  z-index: 1000;
-  align-items: center; justify-content: center;
-}
-.lightbox.active { display: flex; }
-.lightbox img {
-  max-width: 90vw;
-  max-height: 90vh;
-  border-radius: 4px;
-}
-.lightbox .close {
-  position: absolute;
-  top: 1.5rem; right: 1.5rem;
-  color: #fff;
-  font-size: 2rem;
-  cursor: pointer;
-  line-height: 1;
-}
-
-/* ====== empty state ====== */
-.empty {
-  grid-column: 1/-1;
-  text-align: center;
-  color: #444;
-  padding: 5rem 1rem;
-  font-size: 1rem;
-}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0a0a0a; min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; overflow:hidden; font-family:"Smiley Sans Oblique",sans-serif; }
+svg { width:95vw; }
+.char { fill:none; stroke:#fff; stroke-width:6; stroke-linecap:round; stroke-linejoin:round; animation:draw 0.8s linear forwards; }
+.char:nth-child(1){animation-delay:2.4s}
+.char:nth-child(2){animation-delay:1.8s}
+.char:nth-child(3){animation-delay:1.5s}
+.char:nth-child(4){animation-delay:0.3s}
+.char:nth-child(5){animation-delay:1.2s}
+.char:nth-child(6){animation-delay:0s}
+.char:nth-child(7){animation-delay:0.6s}
+.char:nth-child(8){animation-delay:0.9s}
+.char:nth-child(9){animation-delay:2.1s}
+@keyframes draw { to{stroke-dashoffset:0} }
+.char.done { stroke:#8B5CF6; filter:drop-shadow(0 0 6px #8B5CF6); transition:stroke 0.5s, filter 0.5s; }
+.fly { fill:none; stroke:#fff; stroke-width:4; stroke-linecap:round; stroke-linejoin:round; opacity:0; }
+.arc { fill:none; stroke:#fff; stroke-width:3; stroke-linecap:round; stroke-linejoin:round; }
+@keyframes glowPulse { 0%,100%{filter:drop-shadow(0 0 4px #8B5CF6)} 50%{filter:drop-shadow(0 0 22px #8B5CF6) drop-shadow(0 0 44px #a78bfa)} }
+#logoGroup.glow { animation:glowPulse 3s ease-in-out infinite; }
+.btn { padding:.7rem 2.2rem; border:1px solid #8B5CF6; background:transparent; color:#8B5CF6; font-family:inherit; font-size:1rem; letter-spacing:.18em; cursor:pointer; border-radius:3px; position:fixed; bottom:12vh; left:50%; transform:translateX(-50%); opacity:0; }
+.btn.show { animation:btnIn 0.8s ease-out forwards; }
+.btn:hover { background:#8B5CF6; color:#fff; }
+@keyframes btnIn { from{opacity:0;transform:translateX(-50%) translateY(18px)} to{opacity:1;transform:translateX(-50%) translateY(0)} }
 </style>
 </head>
 <body>
 
-<!-- ====== sidebar ====== -->
-<aside>
-  <h1>JIANSPACE</h1>
-  <nav>
-    <a href="#" data-model="all" class="active">全部</a>
-    <a href="#" data-model="MK2">MK2</a>
-    <a href="#" data-model="MK3">MK3</a>
-    <a href="#" data-model="胜利鸟">胜利鸟</a>
-    <a href="#" data-model="征服者">征服者</a>
-    <a href="#" data-model="大雷击">大雷击</a>
-    <a href="#" data-model="小雷击">小雷击</a>
-    <a href="#" data-model="猎鹰">猎鹰</a>
-  </nav>
-</aside>
-
-<!-- ====== main ====== -->
-<main>
-  <div id="themeBar">
-    <span class="model"></span>
-    <button data-theme="all" class="active">全部主题</button>
-  </div>
-  <div class="masonry" id="masonry"></div>
-</main>
-
-<div class="lightbox" id="lightbox" onclick="this.classList.remove('active')">
-  <span class="close">&times;</span>
-  <img id="lightboxImg" src="">
-</div>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8192 5311.3">
+  <g id="logoGroup" transform="translate(0,-550)">
+    <polygon class="char" points="3190,2542.1 3164.1,2753 3103.7,2795.5 3134.7,2542.1"/>
+    <polygon class="char" points="5320.2,2621.3 5443.4,2621.3 5424.4,2668 5314.5,2668 5309.2,2710.5 5432.5,2710.5 5414,2753 5257.3,2753 5283.2,2542.1 5453.1,2542.1 5435,2581.7 5325.1,2581.7"/>
+    <path class="char" d="M5097.6,2542.1c21.2,0,37.6,18.5,35,39.6l0,0l-2.4,19.8h-55.2l1.2-9.9l0,0c0.6-5.2-3.4-9.9-8.7-9.9h-48.1c-5.7,0-10.5,4.2-11.2,9.9l0,0l-13.3,108.3l0,0c-0.7,5.7,3.7,10.6,9.4,10.6h46.6c6.1,0,11.3-4.6,12-10.6l0,0l1.3-10.6h55.2l-2.6,21.2l0,0c-3,24.3-23.6,42.5-48,42.5h-84.3c-22.8,0-40.4-19.9-37.6-42.5l0,0l15.8-128.8l0,0c2.8-22.6,22-39.6,44.8-39.6H5097.6z"/>
+    <path class="char" d="M4186.2,2581.7l-2.4,20h-55.2l1.2-10.1l0,0c0.6-5.2-3.4-9.9-8.7-9.9h-48.1c-5.7,0-10.5,4.2-11.2,9.9l0,0l-2.5,20.2l0,0c-0.6,5.2,3.1,10,8.4,10.4l77.1,7.4c19.3,1.9,33.2,19.2,30.8,38.5l0,0l-5.2,42.5c-1.5,12.1-7.4,22.8-15.9,30.3c-8.6,7.6-19.9,12.1-32,12.1H4038c-22.8,0-40.4-19.9-37.6-42.5l2.6-21.2h46.8c0,0-1.4,11.4-1.4,11.8c0,5.1,4.2,9.5,9.5,9.5h46.6c6.1,0,11.3-4.6,12-10.6l2.6-21.2l0,0c0.7-5.8-3.5-11.1-9.3-11.7l-67.6-7c-19.3-2-33.2-19.4-30.8-38.7l0,0l4.9-39.6c1.4-11.3,6.9-21.2,14.9-28.3c8-7.1,18.5-11.3,29.9-11.3h90.2C4172.4,2542.1,4188.8,2560.6,4186.2,2581.7z"/>
+    <polygon class="char" points="3875.7,2542.1 3849.8,2753 3787.4,2753 3742.8,2621.3 3726.6,2753 3679.9,2753 3705.7,2542.1 3752.5,2542.1 3802.4,2689.3 3820.5,2542.1"/>
+    <path class="char" d="M3490.5,2542.1h-68l-72.6,210.9h46.8l16.2-42.5h51.3l5.9,42.5h49.8L3490.5,2542.1z M3429.1,2668l17.8-46.8h4.9l6.5,46.8H3429.1z"/>
+    <path class="char" d="M4761.3,2542.1h-68l-72.6,210.9h46.8l16.2-42.5h51.3l5.9,42.5h49.8L4761.3,2542.1z M4699.7,2668l17.8-46.8h4.9l6.5,46.8H4699.7z"/>
+    <path class="char" d="M2929.3,2542.1l-20.7,168.4l0,0c-3,24.3-23.6,42.5-48,42.5h-84.4c-22.8,0-40.4-19.9-37.6-42.5l0,0l5.2-42.5h46.8l-3.9,31.9l0,0c-0.7,5.7,3.7,10.6,9.4,10.6h46.6c6.1,0,11.3-4.6,12-10.6l0,0l19.4-157.8L2929.3,2542.1L2929.3,2542.1z"/>
+    <path class="char" d="M4466.8,2542.1h-130.1l-25.9,210.9h46.8l10.4-85h76.1c26.9,0,49.6-20.1,52.9-46.8c0,0,5.1-42.5,5.1-44C4502.1,2558.1,4486.5,2542.1,4466.8,2542.1z M4443.1,2611.3c-0.7,5.6-5.5,9.9-11.2,9.9h-58.3l4.9-39.6h58.3c4.9,0,8.8,4,8.8,8.8C4445.5,2590.9,4443.1,2611.3,4443.1,2611.3z"/>
+  </g>
+  <g id="decoLayer" transform="translate(0,-550)">
+    <polyline class="fly" points="8192,2596.9 6673.5,2596.9 5341.7,2596.9 4265.8,2596.9 3355.4,2596.9 2987.3,2596.9 2608.1,2596.9 1881.7,2596.9 -111.1,2596.9"/>
+    <polyline class="fly" points="3542,-325.4 3232.9,2192.4 3216.9,2323 3192.6,2520.5 3170,2704.7 3149.4,2872.2 3128.9,3039.7 2810.1,5636.4"/>
+    <polyline class="fly" points="2740.5,5753.8 3050.4,3228.9 3071.8,3054.8 3093.1,2880.7 3114.5,2706.7 3138,2515.1 3157.9,2353.1 3177.8,2190.9 3501.1,-442.8"/>
+    <polyline class="fly" points="-333.2,5210.6 1318.2,4050.1 1977,3587.2 2773.3,3027.6 3415.8,2576.1 4050.3,2130.2 4770,1624.5 5430.9,1160 6208.3,613.9 6653.1,301.2 7290.7,-146.8"/>
+    <polyline class="fly" points="5677.9,-293.4 5370.2,2213.3 5351.3,2367.6 5332.3,2522 5310,2704.2 5289.6,2869.9 5269.3,3035.6 5194.7,3643.3 4954,5604.4"/>
+    <polyline class="fly" points="6726.2,-233.3 5599.8,2222.4 5530.4,2373.5 5461.2,2524.6 5379.2,2703.2 5304.7,2865.5 5242.3,3001.7 5157.8,3185.9 4713.4,4154.6 4076,5544.3"/>
+    <polyline class="fly" points="4879.7,5828.4 5067.1,4302.1 5202.2,3201.4 5240.9,2886.2 5262.8,2707.9 5286.9,2511.8 5307.3,2345.8 5327.6,2179.7 5658.7,-517.4"/>
+    <polyline class="fly" points="6742.1,-293.4 5649.2,2213.3 5582,2367.6 5514.7,2521.9 5435.2,2704.2 5363,2869.9 5293.4,3029.5 5210.5,3219.6 4694.4,4403.4 4170.7,5604.4"/>
+    <polyline class="fly" points="-111.2,2228.9 1763.3,2423.4 2254.9,2474.4 2752.6,2526.1 3281.1,2580.9 3652.2,2619.5 4246.8,2681.2 4842.9,2743.1 5415.9,2802.5 6031.6,2866.5 6532,2918.4 8302.6,3102.1"/>
+    <polyline class="fly" points="4521.1,-146.8 4228.6,2235.3 4210.7,2382 4192.7,2528.6 4187.3,2571.9 4171.4,2701.7 4152.1,2859.2 4132.7,3016.7 3833.1,5457.8"/>
+    <polyline class="fly" points="4251.3,-517.4 3920.2,2179.7 3899.8,2345.8 3888.8,2435.4 3879.4,2511.8 3869,2596.4 3855.3,2707.9 3833.5,2886.2 3811.6,3064.4 3472.2,5828.4"/>
+    <polyline class="fly" points="2752.5,-405.4 3110.1,648.8 3410.7,1534.6 3635.2,2196.6 3689.6,2356.7 3743.9,2516.9 3808,2706 3866.4,2878 3924.8,3050 4433.3,4549.1 4829.3,5716.4"/>
+    <polyline class="fly" points="3937.5,5753.8 3561.9,3054.8 3537.7,2880.7 3513.4,2706.7 3486.8,2515.1 3476.7,2442.9 3464.3,2353.1 3441.7,2190.9 3075.1,-442.8"/>
+    <polyline class="fly" points="4465.2,-485.4 3746.8,1600.6 3599.4,2028.4 3545.6,2184.6 3490.4,2345 3432.4,2513.3 3365.6,2707.3 3304.8,2883.8 3244.1,3060.4 2301.7,5796.4"/>
+    <polyline class="fly" points="-111.2,2621.3 1614.2,2621.3 2241.9,2621.3 2674.6,2621.3 3278.4,2621.3 3645,2621.3 4250.3,2621.3 4544.5,2621.3 4861.1,2621.3 5283.2,2621.3 5741.9,2621.3 6066.6,2621.3 6344.8,2621.3 6618.6,2621.3 6722.8,2621.3 8302.6,2621.3"/>
+    <polyline class="fly" points="5746.9,-517.4 5017.1,1601.4 4868.4,2033.5 4818,2179.8 4760.8,2345.8 4703.6,2511.8 4636.1,2707.9 4622,2748.7 4574.6,2886.1 4513.3,3064.4 3629.9,5629.4"/>
+    <polyline class="fly" points="3432.6,5993.8 4540.5,3085.8 4586.1,2966.2 4612.1,2898.2 4659.5,2773.9 4683.5,2710.6 4762.1,2504.3 4828.7,2329.6 4895.2,2155 4934.5,2052 5976.4,-682.8"/>
+    <polyline class="fly" points="4130.3,5753.8 4446.2,3054.9 4466.6,2880.8 4486.9,2706.6 4509.3,2515.2 4528.4,2353.1 4547.3,2190.9 4855.5,-442.8"/>
+    <polyline class="fly" points="3291.1,-405.4 2985.9,2079.9 2971.6,2196.5 2952,2356.7 2932.3,2516.8 2909.2,2706.1 2888,2878 2866.9,3050 2767.3,3861.4 2539.5,5716.4"/>
+    <polyline class="fly" points="3144.9,-208.1 2863.9,2072.8 2849.8,2187.1 2826.5,2375.9 2808.1,2525.8 2786.2,2702.8 2766.4,2863.6 2746.6,3024.5 2608.8,4143 2439.3,5519.1"/>
+    <g id="arcs">
+      <path class="arc" d="M4962.6,2581.7c2.8-22.6,22-39.6,44.8-39.6"/>
+      <path class="arc" d="M4984.4,2753c-22.8,0-40.4-19.9-37.6-42.5"/>
+      <path class="arc" d="M5116.8,2710.5c-3,24.3-23.6,42.5-48,42.5"/>
+      <path class="arc" d="M5050.8,2710.5c6.1,0,11.3-4.6,12-10.6"/>
+      <path class="arc" d="M4994.9,2699.8c-0.7,5.7,3.7,10.6,9.4,10.6"/>
+      <path class="arc" d="M5019.3,2581.7c-5.7,0-10.5,4.2-11.2,9.9"/>
+      <path class="arc" d="M5076.2,2591.5c0.6-5.2-3.4-9.9-8.7-9.9"/>
+      <path class="arc" d="M5097.6,2542.1c21.2,0,37.6,18.5,35,39.6"/>
+      <path class="arc" d="M4151.1,2542.1c21.2,0,37.6,18.5,35,39.6"/>
+      <path class="arc" d="M4031,2553.4c8-7.1,18.5-11.3,29.9-11.3"/>
+      <path class="arc" d="M4016.1,2581.7c1.4-11.3,6.9-21.2,14.9-28.3"/>
+      <path class="arc" d="M4042.1,2660c-19.3-2-33.2-19.4-30.8-38.7"/>
+      <path class="arc" d="M4038,2753c-22.8,0-40.4-19.9-37.6-42.5"/>
+      <path class="arc" d="M4154.4,2740.8c-8.6,7.6-19.9,12.1-32,12.1"/>
+      <path class="arc" d="M4170.3,2710.5c-1.5,12.1-7.4,22.8-15.9,30.3"/>
+      <path class="arc" d="M4144.7,2629.6c19.3,1.9,33.2,19.2,30.8,38.5"/>
+      <path class="arc" d="M2842.6,2710.5c6.1,0,11.3-4.6,12-10.6"/>
+      <path class="arc" d="M2786.6,2699.8c-0.7,5.7,3.7,10.6,9.4,10.6"/>
+      <path class="arc" d="M2776.1,2753c-22.8,0-40.4-19.9-37.6-42.5"/>
+      <path class="arc" d="M2908.5,2710.5c-3,24.3-23.6,42.5-48,42.5"/>
+      <path class="arc" d="M4502.1,2577.3c0-19.2-15.6-35.2-35.3-35.2"/>
+      <path class="arc" d="M4444.1,2668c26.9,0,49.6-20.1,52.9-46.8"/>
+      <path class="arc" d="M4443,2611.3c-0.7,5.6-5.5,9.9-11.2,9.9"/>
+    </g>
+  </g>
+</svg>
+<button class="btn" id="enterBtn" onclick="window.location='http://jianspace.cn/home.html'">点击进入 JIANSPACE</button>
 
 <script>
-// ====== DATA ======
-const data = [
-  // MK2
-  { model:'MK2', slug:'hayabusa', theme:'隼', colors:'荧光粉+韩国粉', files:5 },
-  { model:'MK2', slug:'hayabusa', theme:'隼', colors:'荧光橙+老虎黄', files:5 },
-  { model:'MK2', slug:'hayabusa', theme:'隼', colors:'紫+薰衣草紫', files:5 },
-  // more models will be added here
-];
-
-function imgPath(d) {
-  const t = d.theme;
-  const c = d.colors;
-  const slug = d.slug || d.model;
-  const base = `images/${slug}/${d.model}-${t}-${c}`;
-  return Array.from({length: d.files}, (_,i) => `${base}${i+1}.webp`);
-}
-
-// ====== STATE ======
-let activeModel = 'all';
-let activeTheme = 'all';
-
-// ====== RENDER ======
-const masonry = document.getElementById('masonry');
-const themeBar = document.getElementById('themeBar');
-const sidebarLinks = document.querySelectorAll('aside nav a');
-
-function getFiltered() {
-  let photos = [];
-  data.forEach(d => {
-    const matchModel = activeModel === 'all' || d.model === activeModel;
-    const matchTheme = activeTheme === 'all' || d.theme === activeTheme;
-    if (matchModel && matchTheme) {
-      imgPath(d).forEach(p => photos.push({ src: p, model: d.model, theme: d.theme, colors: d.colors }));
+// Exact dasharray per char
+document.querySelectorAll('.char').forEach(el => {
+  let len = 0;
+  if (el.tagName === 'path') {
+    len = el.getTotalLength();
+  } else if (el.tagName === 'polygon') {
+    const pts = el.getAttribute('points').split(/[ ,]+/).map(Number);
+    for (let i = 0; i < pts.length - 2; i += 2) {
+      len += Math.hypot(pts[i+2]-pts[i], pts[i+3]-pts[i+1]);
     }
-  });
-  // shuffle
-  for (let i = photos.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [photos[i], photos[j]] = [photos[j], photos[i]];
+    len += Math.hypot(pts[0]-pts[pts.length-2], pts[1]-pts[pts.length-1]);
   }
-  return photos;
-}
-
-function getThemesForModel(model) {
-  const themes = new Set();
-  data.filter(d => d.model === model).forEach(d => themes.add(d.theme));
-  return [...themes];
-}
-
-function renderThemeBar() {
-  if (activeModel === 'all') {
-    themeBar.classList.remove('visible');
-  } else {
-    themeBar.classList.add('visible');
-    themeBar.querySelector('span.model').textContent = activeModel;
-    // build theme buttons
-    const existing = themeBar.querySelectorAll('button');
-    existing.forEach(b => b.remove());
-    const themes = getThemesForModel(activeModel);
-    const allBtn = document.createElement('button');
-    allBtn.dataset.theme = 'all';
-    allBtn.textContent = '全部主题';
-    allBtn.classList.toggle('active', activeTheme === 'all');
-    allBtn.onclick = () => { activeTheme = 'all'; renderAll(); };
-    themeBar.appendChild(allBtn);
-    themes.forEach(t => {
-      const btn = document.createElement('button');
-      btn.dataset.theme = t;
-      btn.textContent = t;
-      btn.classList.toggle('active', activeTheme === t);
-      btn.onclick = () => { activeTheme = t; renderAll(); };
-      themeBar.appendChild(btn);
-    });
-  }
-}
-
-function renderAll() {
-  renderThemeBar();
-  const photos = getFiltered();
-  masonry.innerHTML = '';
-  if (photos.length === 0) {
-    masonry.innerHTML = '<div class="empty">暂无照片，敬请期待</div>';
-    return;
-  }
-  photos.forEach(p => {
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.innerHTML = `
-      <img src="${p.src}" alt="${p.model} ${p.theme} ${p.colors}" loading="lazy">
-      <div class="overlay">${p.model} ${p.theme} · ${p.colors}</div>
-    `;
-    card.onclick = () => {
-      document.getElementById('lightboxImg').src = p.src;
-      document.getElementById('lightbox').classList.add('active');
-    };
-    masonry.appendChild(card);
-  });
-}
-
-// ====== SIDEBAR CLICKS ======
-sidebarLinks.forEach(a => {
-  a.onclick = e => {
-    e.preventDefault();
-    activeModel = a.dataset.model;
-    activeTheme = 'all';
-    sidebarLinks.forEach(l => l.classList.remove('active'));
-    a.classList.add('active');
-    renderAll();
-  };
+  el.setAttribute('stroke-dasharray', len);
+  el.setAttribute('stroke-dashoffset', len);
 });
 
-// initial render
-renderAll();
+const startT = performance.now();
+
+function animateFlyLine(line, delay, dur) {
+  const pts = line.getAttribute('points').split(/[ ,]+/).map(Number);
+  const fx = pts[0], fy = pts[1], lx = pts[pts.length-2], ly = pts[pts.length-1];
+  const dx = lx - fx, dy = ly - fy;
+  const len = Math.sqrt(dx*dx+dy*dy) || 1;
+  const ndx = dx/len, ndy = dy/len;
+  const dist = 5000;
+
+  function fly(now) {
+    const t = (now - startT - delay) / dur;
+    if (t < 0) { requestAnimationFrame(fly); return; }
+    if (t > 1) { line.style.opacity = '0'; return; }
+    let pp;
+    if (t < 0.15) { pp = t / 0.15 * 0.12; }
+    else if (t < 0.85) { pp = 0.12 + (t-0.15)/0.7 * 0.76; }
+    else { pp = 0.88 + (t-0.85)/0.15 * 0.12; }
+    const pos = -dist + pp * dist * 2;
+    line.setAttribute('transform', `translate(${ndx*pos},${ndy*pos})`);
+    line.style.opacity = t < 0.1 ? t/0.1*0.6 : t > 0.8 ? (1-(t-0.8)/0.2)*0.6 : 0.6;
+    requestAnimationFrame(fly);
+  }
+  requestAnimationFrame(fly);
+}
+
+// Auto-assign fly lines to nearest char
+const charEls = document.querySelectorAll('.char');
+const charCenters = [];
+charEls.forEach(el => {
+  const b = el.getBBox();
+  charCenters.push({ cx: b.x+b.width/2, cy: b.y+b.height/2 });
+});
+
+const lineAssignments = [];
+document.querySelectorAll('.fly').forEach(line => {
+  const pts = line.getAttribute('points').split(/[ ,]+/).map(Number);
+  let sx=0, sy=0, n=0;
+  for (let i=0; i<pts.length; i+=2) { sx+=pts[i]; sy+=pts[i+1]; n++; }
+  const mx=sx/n, my=sy/n;
+  let best=0, bestD=Infinity;
+  charCenters.forEach((c,i) => {
+    const d=Math.hypot(mx-c.cx, my-c.cy);
+    if (d<bestD) { bestD=d; best=i; }
+  });
+  if (!lineAssignments[best]) lineAssignments[best]=[];
+  lineAssignments[best].push(line);
+});
+
+const lDelays = [2400,1800,1500,300,1200,0,600,900,2100];
+lineAssignments.forEach((lines, ci) => {
+  if (!lines) return;
+  lines.slice(0,3).forEach((line,i) => {
+    animateFlyLine(line, lDelays[ci] + i*200, 800);
+  });
+});
+
+// Per-char purple
+const charDelays = [2400,1800,1500,300,1200,0,600,900,2100];
+document.querySelectorAll('.char').forEach((ch,i) => {
+  setTimeout(() => ch.classList.add('done'), charDelays[i]+800);
+});
+
+// Arcs
+document.querySelectorAll('.arc').forEach(arc => {
+  const len = arc.getTotalLength();
+  arc.setAttribute('stroke-dasharray', len);
+  arc.setAttribute('stroke-dashoffset', len);
+  arc.style.opacity = '0';
+
+  const b = arc.getBBox();
+  const ax=b.x+b.width/2, ay=b.y+b.height/2;
+  let best=0, bestD=Infinity;
+  charCenters.forEach((c,i) => {
+    const d=Math.hypot(ax-c.cx, ay-c.cy);
+    if (d<bestD) { bestD=d; best=i; }
+  });
+  const charStart = lDelays[best];
+  const arcStart = Math.max(0, charStart-400);
+  const arcDur = 400;
+
+  function animArc(now) {
+    const elapsed = now-startT-arcStart;
+    if (elapsed<0) { requestAnimationFrame(animArc); return; }
+    const t=Math.min(1,elapsed/arcDur);
+    arc.setAttribute('stroke-dashoffset', len*(1-t));
+    arc.style.opacity = t<0.2 ? t/0.2 : 0.8;
+    if (t<1) requestAnimationFrame(animArc);
+    else { arc.style.opacity='0'; arc.style.transition='opacity 0.3s'; }
+  }
+  requestAnimationFrame(animArc);
+});
+
+setTimeout(() => document.getElementById('logoGroup').classList.add('glow'), 3000);
+setTimeout(() => document.getElementById('enterBtn').classList.add('show'), 1800);
 </script>
 </body>
 </html>
