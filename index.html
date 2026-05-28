@@ -8,7 +8,7 @@
 * { margin:0; padding:0; box-sizing:border-box; }
 body { background:#0a0a0a; min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; overflow:hidden; font-family:"Smiley Sans Oblique",sans-serif; }
 svg { width:95vw; }
-.char { fill:none; stroke:#fff; stroke-width:6; stroke-linecap:round; stroke-linejoin:round; animation:draw 0.8s linear forwards; }
+@media (max-width:768px) { svg { width:98vw; } .btn { padding:.5rem 1.5rem; font-size:.85rem; bottom:10vh; } }
 .char:nth-child(1){animation-delay:2.4s}
 .char:nth-child(2){animation-delay:1.8s}
 .char:nth-child(3){animation-delay:1.5s}
