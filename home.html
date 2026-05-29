@@ -308,7 +308,7 @@ function imgPath(d) {
   const c = d.colors;
   const slug = d.slug || d.model;
   const base = `images/${slug}/${d.model}-${t}-${c}`;
-  return Array.from({length: d.files}, (_,i) => `${base}${i+1}.webp`);
+  return Array.from({length: d.files}, (_,i) => `${base}${i+1}.webp?v=2`);
 }
 
 // ====== STATE ======
