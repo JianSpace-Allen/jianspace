@@ -36,13 +36,10 @@ body { background:#0a0a0a; min-height:100vh; display:flex; flex-direction:column
 .arc { fill:none; stroke:#fff; stroke-width:3; stroke-linecap:round; stroke-linejoin:round; }
 @keyframes glowPulse { 0%,100%{filter:drop-shadow(0 0 4px #8B5CF6)} 50%{filter:drop-shadow(0 0 22px #8B5CF6) drop-shadow(0 0 44px #a78bfa)} }
 #logoGroup.glow, #logoGroupMob.glow { animation:glowPulse 3s ease-in-out infinite; }
-.btn { padding:.7rem 2.2rem; border:2px solid #8B5CF6; background:transparent; color:#8B5CF6; font-family:"Smiley Sans Oblique",sans-serif; font-size:1rem; letter-spacing:.18em; cursor:pointer; border-radius:999px; position:fixed; bottom:12vh; left:50%; transform:translateX(-50%); opacity:0; overflow:visible; }
-.btn::after { content:''; position:absolute; top:-4px;left:-4px;right:-4px;bottom:-4px; border-radius:999px; background:conic-gradient(from 0deg,transparent 75%,rgba(255,255,255,0.95) 85%,#c4b5fd 92%,transparent 100%); -webkit-mask:radial-gradient(circle,transparent calc(100% - 8px),#000 calc(100% - 6px)); mask:radial-gradient(circle,transparent calc(100% - 8px),#000 calc(100% - 6px)); z-index:-1; animation:orbit 2.5s linear infinite; opacity:0; transition:opacity 0.5s; }
+.btn { padding:.7rem 2.2rem; border:1px solid #8B5CF6; background:transparent; color:#8B5CF6; font-family:inherit; font-size:1rem; letter-spacing:.18em; cursor:pointer; border-radius:3px; position:fixed; bottom:12vh; left:50%; transform:translateX(-50%); opacity:0; }
 .btn.show { animation:btnIn 0.8s ease-out forwards; }
-.btn.show::after { opacity:1; }
-.btn:hover { background:#1a102e; color:#fff; border-color:#a78bfa; }
+.btn:hover { background:#8B5CF6; color:#fff; }
 @keyframes btnIn { from{opacity:0;transform:translateX(-50%) translateY(18px)} to{opacity:1;transform:translateX(-50%) translateY(0)} }
-@keyframes orbit { to{transform:rotate(360deg)} }
 </style>
 </head>
 <body>
