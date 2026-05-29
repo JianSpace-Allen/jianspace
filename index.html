@@ -243,7 +243,22 @@ setTimeout(() => document.getElementById('enterBtn').classList.add('show'), 1800
   if(!mobSvg)return;
   const mChars=mobSvg.querySelectorAll('#logoGroupMob .char');
   const mFly=mobSvg.querySelectorAll('#decoLayerMob .fly');
-  if(!mChars.length||!mFly.length)return;
+  if(!mChars.length)return;
+  // set up mobile char stroke animation
+  mChars.forEach(el=>{
+    let len=0;
+    if(el.tagName==='path')len=el.getTotalLength();
+    else if(el.tagName==='polygon'){
+      const pts=el.getAttribute('points').split(/[ ,]+/).map(Number);
+      for(let i=0;i<pts.length-2;i+=2)len+=Math.hypot(pts[i+2]-pts[i],pts[i+3]-pts[i+1]);
+      len+=Math.hypot(pts[0]-pts[pts.length-2],pts[1]-pts[pts.length-1]);
+    }
+    el.setAttribute('stroke-dasharray',len);
+    el.setAttribute('stroke-dashoffset',len);
+  });
+  const mCharDelays=[2.4,1.8,1.5,0.3,1.2,0,0.6,0.9,2.1];
+  mChars.forEach((ch,i)=>{setTimeout(()=>ch.classList.add('done'),mCharDelays[i]+800)});
+  if(!mFly.length)return;
   const mCenters=[];
   mChars.forEach(el=>{const b=el.getBBox();mCenters.push({cx:b.x+b.width/2,cy:b.y+b.height/2});});
   const mAssign=[];
