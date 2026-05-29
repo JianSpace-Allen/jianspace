@@ -36,7 +36,10 @@ body { background:#0a0a0a; min-height:100vh; display:flex; flex-direction:column
 .arc { fill:none; stroke:#fff; stroke-width:3; stroke-linecap:round; stroke-linejoin:round; }
 @keyframes glowPulse { 0%,100%{filter:drop-shadow(0 0 4px #8B5CF6)} 50%{filter:drop-shadow(0 0 22px #8B5CF6) drop-shadow(0 0 44px #a78bfa)} }
 #logoGroup.glow, #logoGroupMob.glow { animation:glowPulse 3s ease-in-out infinite; }
-.btn { padding:.7rem 2.2rem; border:1px solid #8B5CF6; background:transparent; color:#8B5CF6; font-family:inherit; font-size:1rem; letter-spacing:.18em; cursor:pointer; border-radius:3px; position:fixed; bottom:12vh; left:50%; transform:translateX(-50%); opacity:0; }
+.btn { padding:.7rem 2.2rem; border:1px solid #8B5CF6; background:transparent; color:#8B5CF6; font-family:"Smiley Sans Oblique",sans-serif; font-size:1rem; letter-spacing:.18em; cursor:pointer; border-radius:999px; position:fixed; bottom:12vh; left:50%; transform:translateX(-50%); opacity:0; }
+.btn.show { animation:btnIn 0.8s ease-out forwards; }
+.btn:hover { background:#8B5CF6; color:#fff; }
+@keyframes btnIn { from{opacity:0;transform:translateX(-50%) translateY(18px)} to{opacity:1;transform:translateX(-50%) translateY(0)} }
 .btn.show { animation:btnIn 0.8s ease-out forwards; }
 .btn:hover { background:#8B5CF6; color:#fff; }
 @keyframes btnIn { from{opacity:0;transform:translateX(-50%) translateY(18px)} to{opacity:1;transform:translateX(-50%) translateY(0)} }
