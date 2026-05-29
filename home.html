@@ -179,19 +179,21 @@ main.expanded .masonry::before { height:75px; }
 /* ====== mobile ====== */
 @media (max-width:768px) {
   aside { width:33vw; padding:1.5rem .8rem; }
-  aside h1 { font-size:1.2rem; margin-bottom:1rem; }
   aside nav a { font-size:.85rem; padding:.35rem 0; }
   aside nav .group-title { font-size:.8rem; padding-top:.8rem; }
   aside nav .sub { font-size:.75rem; padding-left:.5rem; }
-  aside nav { padding-top:2.5rem; }
+  aside nav { padding-top:.3rem; }
+  aside #logo { display:none; }
   main { margin-left:33vw; }
-  main.expanded { margin-left:40px; }
+  main.expanded { margin-left:0; }
   #sidebarToggle { left:33vw; width:14px; height:44px; font-size:.55rem; }
-  #sidebarToggle.shifted { left:40px; }
+  #sidebarToggle.shifted { left:0; }
   .masonry { padding:.75rem .5rem; columns:2 160px; column-gap:.4rem; }
-  aside.collapsed #logo { left:50px; width:150px; }
-  main.expanded .masonry::before { height:50px; }
+  aside.collapsed { width:0; padding:0; overflow:hidden; }
+  aside.collapsed #logo { display:none; }
+  #topLogo { display:block; }
 }
+#topLogo { display:none; width:200px; margin:1rem auto; cursor:pointer; }
 
 /* ====== lightbox ====== */
 .lightbox {
@@ -275,6 +277,7 @@ main.expanded .masonry::before { height:75px; }
 
 <!-- ====== main ====== -->
 <main>
+  <div id="topLogo"></div>
   <div id="themeBar">
     <span class="model"></span>
     <button data-theme="all" class="active">全部主题</button>
@@ -454,6 +457,19 @@ function toggleSidebar() {
     if (scrollHandler) { window.removeEventListener('scroll', scrollHandler); scrollHandler = null; }
   }
 }
+
+// Mobile top logo (clone from sidebar)
+(function(){
+  const topLogo=document.getElementById('topLogo');
+  const sideLogo=document.getElementById('logo');
+  if(topLogo&&sideLogo){
+    topLogo.innerHTML=sideLogo.innerHTML;
+    topLogo.setAttribute('viewBox',sideLogo.getAttribute('viewBox'));
+    topLogo.className=sideLogo.className;
+    topLogo.onclick=()=>{activeModel='all';activeTheme='all';sidebarLinks.forEach(l=>l.classList.remove('active'));renderAll();};
+  }
+  // Remove logo from sidebar on mobile (handled by CSS display:none)
+})();
 
 // initial render
 renderAll();
