@@ -440,10 +440,12 @@ function toggleSidebar() {
   const btn = document.getElementById('sidebarToggle');
   const aside = document.querySelector('aside');
   const main = document.querySelector('main');
+  const nav = aside.querySelector('nav');
   const collapsed = aside.classList.toggle('collapsed');
   main.classList.toggle('expanded');
   btn.classList.toggle('shifted');
   btn.innerHTML = collapsed ? '&#9654;' : '&#9664;';
+  nav.style.transitionDelay = collapsed ? '0.1s' : '0.2s';
 }
 
 // initial render
