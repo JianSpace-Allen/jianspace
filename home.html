@@ -183,7 +183,7 @@ main.expanded .masonry::before { height:75px; }
   aside nav .group-title { font-size:.8rem; padding-top:.8rem; }
   aside nav .sub { font-size:.75rem; padding-left:.5rem; }
   aside nav { padding-top:.3rem; }
-  aside #logo { display:none; }
+  aside #logo { display:block; width:100px; position:fixed; left:.8rem; top:1.5rem; z-index:105; }
   main { margin-left:33vw; }
   main.expanded { margin-left:0; }
   #sidebarToggle { left:33vw; width:14px; height:44px; font-size:.55rem; }
@@ -193,9 +193,7 @@ main.expanded .masonry { columns:3 110px; }
   .masonry .card { margin-bottom:.35rem; }
   aside.collapsed { width:0; padding:0; overflow:hidden; }
   aside.collapsed #logo { display:none; }
-  #topLogo { display:block; }
 }
-#topLogo { display:none; width:200px; margin:1rem auto; cursor:pointer; }
 
 /* ====== lightbox ====== */
 .lightbox {
@@ -279,7 +277,6 @@ main.expanded .masonry { columns:3 110px; }
 
 <!-- ====== main ====== -->
 <main>
-  <svg id="topLogo" xmlns="http://www.w3.org/2000/svg" viewBox="2750 2520 2730 300"></svg>
   <div id="themeBar">
     <span class="model"></span>
     <button data-theme="all" class="active">全部主题</button>
@@ -459,19 +456,6 @@ function toggleSidebar() {
     if (scrollHandler) { window.removeEventListener('scroll', scrollHandler); scrollHandler = null; }
   }
 }
-
-// Mobile top logo (clone from sidebar)
-(function(){
-  const topLogo=document.getElementById('topLogo');
-  const sideLogo=document.getElementById('logo');
-  if(topLogo&&sideLogo){
-    topLogo.innerHTML=sideLogo.innerHTML;
-    topLogo.setAttribute('viewBox',sideLogo.getAttribute('viewBox'));
-    topLogo.className=sideLogo.className;
-    topLogo.onclick=()=>{activeModel='all';activeTheme='all';sidebarLinks.forEach(l=>l.classList.remove('active'));renderAll();};
-  }
-  // Remove logo from sidebar on mobile (handled by CSS display:none)
-})();
 
 // initial render
 renderAll();
