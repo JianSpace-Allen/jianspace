@@ -283,8 +283,9 @@ setTimeout(() => document.getElementById('enterBtn').classList.add('show'), 1800
       const len=Math.sqrt(dx*dx+dy*dy)||1;
       const ndx=dx/len,ndy=dy/len;
       const dist=Math.max(5000,len*0.55);
+      const baseDelay=mLd[ci]===0?0:0.2;
       function fly(now){
-        const t=(now-startT-(mLd[ci]+i*0.2)*1000)/800;
+        const t=(now-startT-(mLd[ci]-baseDelay+i*0.15)*1000)/800;
         if(t<0){requestAnimationFrame(fly);return}
         if(t>1){line.style.opacity='0';return}
         let pp;
