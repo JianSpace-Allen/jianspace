@@ -21,34 +21,67 @@ body {
 aside {
   position: fixed;
   left: 0; top: 0; bottom: 0;
-  width: 180px;
+  width: 220px;
   background: #0d0d0d;
   border-right: 1px solid #1a1a1a;
   padding: 2.5rem 1.5rem;
   overflow-y: auto;
   z-index: 100;
 }
+#logo { width:190px; display:block; cursor:pointer; margin-bottom:1rem; user-select:none; filter:drop-shadow(0 0 0 transparent); transition:filter 1.8s ease; }
+#logo .char { fill:#8B5CF6; }
+#logo.done { filter:drop-shadow(0 0 1px #fff) drop-shadow(0 0 3px #8B5CF6); }
+@keyframes breathe { 0%,100%{filter:drop-shadow(0 0 0 transparent)} 50%{filter:drop-shadow(0 0 2px #fff) drop-shadow(0 0 4px #8B5CF6) drop-shadow(0 0 8px #a78bfa)} }
+#logo.breathing { animation:breathe 3s ease-in-out infinite; will-change:filter; }
+#maskLayer .char { fill:black; stroke:white; stroke-width:80; stroke-linecap:round; stroke-linejoin:round; animation:draw 0.8s ease forwards; }
+#maskLayer .char:nth-child(1){animation-delay:2.4s}
+#maskLayer .char:nth-child(2){animation-delay:1.8s}
+#maskLayer .char:nth-child(3){animation-delay:1.5s}
+#maskLayer .char:nth-child(4){animation-delay:0.3s}
+#maskLayer .char:nth-child(5){animation-delay:1.2s}
+#maskLayer .char:nth-child(6){animation-delay:0s}
+#maskLayer .char:nth-child(7){animation-delay:0.6s}
+#maskLayer .char:nth-child(8){animation-delay:0.9s}
+#maskLayer .char:nth-child(9){animation-delay:2.1s}
+@keyframes draw { to{stroke-dashoffset:0} }
 aside h1 {
-  font-size: 1.4rem;
+  font-size: 2.1rem;
   letter-spacing: 0.15em;
   color: #8B5CF6;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.15s;
 }
+aside h1:hover { color: #b794f6; }
 aside nav a {
   display: block;
   color: #666;
   text-decoration: none;
   padding: 0.5rem 0;
-  font-size: 0.95rem;
+  font-size: 1.4rem;
   transition: color 0.15s;
   letter-spacing: 0.05em;
 }
 aside nav a:hover,
 aside nav a.active { color: #fff; }
+aside nav .group-title {
+  color: #8B5CF6;
+  font-size: 1.35rem;
+  letter-spacing: 0.08em;
+  padding-top: 1.2rem;
+  padding-bottom: 0.25rem;
+  cursor: default;
+}
+aside nav .group-title:hover { color: #8B5CF6; }
+aside nav .sub {
+  font-size: 1.3rem;
+  padding-left: 0.8rem;
+}
 
 /* ====== main ====== */
 main {
-  margin-left: 180px;
+  margin-left: 220px;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -150,16 +183,45 @@ main {
 
 <!-- ====== sidebar ====== -->
 <aside>
-  <h1>JIANSPACE</h1>
+  <svg id="logo" xmlns="http://www.w3.org/2000/svg" viewBox="2750 2520 2730 300">
+    <defs>
+      <mask id="reveal">
+        <g id="maskLayer">
+          <polygon class="char" points="3190,2542.1 3164.1,2753 3103.7,2795.5 3134.7,2542.1"/>
+          <polygon class="char" points="5320.2,2621.3 5443.4,2621.3 5424.4,2668 5314.5,2668 5309.2,2710.5 5432.5,2710.5 5414,2753 5257.3,2753 5283.2,2542.1 5453.1,2542.1 5435,2581.7 5325.1,2581.7"/>
+          <path class="char" d="M5097.6,2542.1c21.2,0,37.6,18.5,35,39.6l0,0l-2.4,19.8h-55.2l1.2-9.9l0,0c0.6-5.2-3.4-9.9-8.7-9.9h-48.1c-5.7,0-10.5,4.2-11.2,9.9l0,0l-13.3,108.3l0,0c-0.7,5.7,3.7,10.6,9.4,10.6h46.6c6.1,0,11.3-4.6,12-10.6l0,0l1.3-10.6h55.2l-2.6,21.2l0,0c-3,24.3-23.6,42.5-48,42.5h-84.3c-22.8,0-40.4-19.9-37.6-42.5l0,0l15.8-128.8l0,0c2.8-22.6,22-39.6,44.8-39.6H5097.6z"/>
+          <path class="char" d="M4186.2,2581.7l-2.4,20h-55.2l1.2-10.1l0,0c0.6-5.2-3.4-9.9-8.7-9.9h-48.1c-5.7,0-10.5,4.2-11.2,9.9l0,0l-2.5,20.2l0,0c-0.6,5.2,3.1,10,8.4,10.4l77.1,7.4c19.3,1.9,33.2,19.2,30.8,38.5l0,0l-5.2,42.5c-1.5,12.1-7.4,22.8-15.9,30.3c-8.6,7.6-19.9,12.1-32,12.1H4038c-22.8,0-40.4-19.9-37.6-42.5l2.6-21.2h46.8c0,0-1.4,11.4-1.4,11.8c0,5.1,4.2,9.5,9.5,9.5h46.6c6.1,0,11.3-4.6,12-10.6l2.6-21.2l0,0c0.7-5.8-3.5-11.1-9.3-11.7l-67.6-7c-19.3-2-33.2-19.4-30.8-38.7l0,0l4.9-39.6c1.4-11.3,6.9-21.2,14.9-28.3c8-7.1,18.5-11.3,29.9-11.3h90.2C4172.4,2542.1,4188.8,2560.6,4186.2,2581.7z"/>
+          <polygon class="char" points="3875.7,2542.1 3849.8,2753 3787.4,2753 3742.8,2621.3 3726.6,2753 3679.9,2753 3705.7,2542.1 3752.5,2542.1 3802.4,2689.3 3820.5,2542.1"/>
+          <path class="char" d="M3490.5,2542.1h-68l-72.6,210.9h46.8l16.2-42.5h51.3l5.9,42.5h49.8L3490.5,2542.1z M3429.1,2668l17.8-46.8h4.9l6.5,46.8H3429.1z"/>
+          <path class="char" d="M4761.3,2542.1h-68l-72.6,210.9h46.8l16.2-42.5h51.3l5.9,42.5h49.8L4761.3,2542.1z M4699.7,2668l17.8-46.8h4.9l6.5,46.8H4699.7z"/>
+          <path class="char" d="M2929.3,2542.1l-20.7,168.4l0,0c-3,24.3-23.6,42.5-48,42.5h-84.4c-22.8,0-40.4-19.9-37.6-42.5l0,0l5.2-42.5h46.8l-3.9,31.9l0,0c-0.7,5.7,3.7,10.6,9.4,10.6h46.6c6.1,0,11.3-4.6,12-10.6l0,0l19.4-157.8L2929.3,2542.1L2929.3,2542.1z"/>
+          <path class="char" d="M4466.8,2542.1h-130.1l-25.9,210.9h46.8l10.4-85h76.1c26.9,0,49.6-20.1,52.9-46.8c0,0,5.1-42.5,5.1-44C4502.1,2558.1,4486.5,2542.1,4466.8,2542.1z M4443.1,2611.3c-0.7,5.6-5.5,9.9-11.2,9.9h-58.3l4.9-39.6h58.3c4.9,0,8.8,4,8.8,8.8C4445.5,2590.9,4443.1,2611.3,4443.1,2611.3z"/>
+        </g>
+      </mask>
+    </defs>
+    <g mask="url(#reveal)">
+      <polygon class="char" points="3190,2542.1 3164.1,2753 3103.7,2795.5 3134.7,2542.1"/>
+      <polygon class="char" points="5320.2,2621.3 5443.4,2621.3 5424.4,2668 5314.5,2668 5309.2,2710.5 5432.5,2710.5 5414,2753 5257.3,2753 5283.2,2542.1 5453.1,2542.1 5435,2581.7 5325.1,2581.7"/>
+      <path class="char" d="M5097.6,2542.1c21.2,0,37.6,18.5,35,39.6l0,0l-2.4,19.8h-55.2l1.2-9.9l0,0c0.6-5.2-3.4-9.9-8.7-9.9h-48.1c-5.7,0-10.5,4.2-11.2,9.9l0,0l-13.3,108.3l0,0c-0.7,5.7,3.7,10.6,9.4,10.6h46.6c6.1,0,11.3-4.6,12-10.6l0,0l1.3-10.6h55.2l-2.6,21.2l0,0c-3,24.3-23.6,42.5-48,42.5h-84.3c-22.8,0-40.4-19.9-37.6-42.5l0,0l15.8-128.8l0,0c2.8-22.6,22-39.6,44.8-39.6H5097.6z"/>
+      <path class="char" d="M4186.2,2581.7l-2.4,20h-55.2l1.2-10.1l0,0c0.6-5.2-3.4-9.9-8.7-9.9h-48.1c-5.7,0-10.5,4.2-11.2,9.9l0,0l-2.5,20.2l0,0c-0.6,5.2,3.1,10,8.4,10.4l77.1,7.4c19.3,1.9,33.2,19.2,30.8,38.5l0,0l-5.2,42.5c-1.5,12.1-7.4,22.8-15.9,30.3c-8.6,7.6-19.9,12.1-32,12.1H4038c-22.8,0-40.4-19.9-37.6-42.5l2.6-21.2h46.8c0,0-1.4,11.4-1.4,11.8c0,5.1,4.2,9.5,9.5,9.5h46.6c6.1,0,11.3-4.6,12-10.6l2.6-21.2l0,0c0.7-5.8-3.5-11.1-9.3-11.7l-67.6-7c-19.3-2-33.2-19.4-30.8-38.7l0,0l4.9-39.6c1.4-11.3,6.9-21.2,14.9-28.3c8-7.1,18.5-11.3,29.9-11.3h90.2C4172.4,2542.1,4188.8,2560.6,4186.2,2581.7z"/>
+      <polygon class="char" points="3875.7,2542.1 3849.8,2753 3787.4,2753 3742.8,2621.3 3726.6,2753 3679.9,2753 3705.7,2542.1 3752.5,2542.1 3802.4,2689.3 3820.5,2542.1"/>
+      <path class="char" d="M3490.5,2542.1h-68l-72.6,210.9h46.8l16.2-42.5h51.3l5.9,42.5h49.8L3490.5,2542.1z M3429.1,2668l17.8-46.8h4.9l6.5,46.8H3429.1z"/>
+      <path class="char" d="M4761.3,2542.1h-68l-72.6,210.9h46.8l16.2-42.5h51.3l5.9,42.5h49.8L4761.3,2542.1z M4699.7,2668l17.8-46.8h4.9l6.5,46.8H4699.7z"/>
+      <path class="char" d="M2929.3,2542.1l-20.7,168.4l0,0c-3,24.3-23.6,42.5-48,42.5h-84.4c-22.8,0-40.4-19.9-37.6-42.5l0,0l5.2-42.5h46.8l-3.9,31.9l0,0c-0.7,5.7,3.7,10.6,9.4,10.6h46.6c6.1,0,11.3-4.6,12-10.6l0,0l19.4-157.8L2929.3,2542.1L2929.3,2542.1z"/>
+      <path class="char" d="M4466.8,2542.1h-130.1l-25.9,210.9h46.8l10.4-85h76.1c26.9,0,49.6-20.1,52.9-46.8c0,0,5.1-42.5,5.1-44C4502.1,2558.1,4486.5,2542.1,4466.8,2542.1z M4443.1,2611.3c-0.7,5.6-5.5,9.9-11.2,9.9h-58.3l4.9-39.6h58.3c4.9,0,8.8,4,8.8,8.8C4445.5,2590.9,4443.1,2611.3,4443.1,2611.3z"/>
+    </g>
+  </svg>
   <nav>
-    <a href="#" data-model="all" class="active">全部</a>
-    <a href="#" data-model="MK2">MK2</a>
-    <a href="#" data-model="MK3">MK3</a>
-    <a href="#" data-model="胜利鸟">胜利鸟</a>
-    <a href="#" data-model="征服者">征服者</a>
-    <a href="#" data-model="大雷击">大雷击</a>
-    <a href="#" data-model="小雷击">小雷击</a>
-    <a href="#" data-model="猎鹰">猎鹰</a>
+    <a href="#" class="group-title">软壳喷涂</a>
+    <a href="#" data-model="MK2" class="sub">MK2</a>
+    <a href="#" data-model="MK3" class="sub">MK3</a>
+    <a href="#" data-model="胜利鸟" class="sub">胜利鸟</a>
+    <a href="#" data-model="征服者" class="sub">征服者</a>
+    <a href="#" data-model="大雷击" class="sub">大雷击</a>
+    <a href="#" data-model="小雷击" class="sub">小雷击</a>
+    <a href="#" data-model="猎鹰" class="sub">猎鹰</a>
+    <a href="#" class="group-title">3D打印</a>
+    <a href="#" data-model="装/调车盒" class="sub">装/调车盒</a>
   </nav>
 </aside>
 
@@ -277,10 +339,40 @@ function renderAll() {
   });
 }
 
+// ====== Logo animation (mask reveal + breathing glow) ======
+document.querySelectorAll('#maskLayer .char').forEach(el => {
+  let len = 0;
+  if (el.tagName === 'path') {
+    len = el.getTotalLength();
+  } else if (el.tagName === 'polygon') {
+    const pts = el.getAttribute('points').split(/[ ,]+/).map(Number);
+    for (let i = 0; i < pts.length - 2; i += 2) {
+      len += Math.hypot(pts[i+2]-pts[i], pts[i+3]-pts[i+1]);
+    }
+    len += Math.hypot(pts[0]-pts[pts.length-2], pts[1]-pts[pts.length-1]);
+  }
+  el.setAttribute('stroke-dasharray', len);
+  el.setAttribute('stroke-dashoffset', len);
+});
+setTimeout(() => {
+  const logo = document.getElementById('logo');
+  logo.classList.add('done');
+  setTimeout(() => logo.classList.add('breathing'), 1800);
+}, 3200);
+
+// ====== Logo click = show all ======
+document.getElementById('logo').onclick = () => {
+  activeModel = 'all';
+  activeTheme = 'all';
+  sidebarLinks.forEach(l => l.classList.remove('active'));
+  renderAll();
+};
+
 // ====== SIDEBAR CLICKS ======
 sidebarLinks.forEach(a => {
   a.onclick = e => {
     e.preventDefault();
+    if (!a.dataset.model) return; // group-title, ignore
     activeModel = a.dataset.model;
     activeTheme = 'all';
     sidebarLinks.forEach(l => l.classList.remove('active'));
