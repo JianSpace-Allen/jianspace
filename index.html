@@ -289,11 +289,19 @@ setTimeout(() => document.getElementById('enterBtn').classList.add('show'), 1800
       const delay=mLd[ci]; // base delay for this letter
       lines.slice(0,5).forEach((line,i)=>{
         const pts=line.getAttribute('points').split(/[ ,]+/).map(Number);
-        const fx=pts[0],fy=pts[1],lx=pts[pts.length-2],ly=pts[pts.length-1];
-        const dx=lx-fx,dy=ly-fy;
-        const len=Math.sqrt(dx*dx+dy*dy)||1;
-        const ndx=dx/len,ndy=dy/len;
-        const dist=Math.max(8000,len*0.9);
+        // Extend start: continue from pts[2,3]→pts[0,1] direction
+        const sx=pts[0],sy=pts[1],sx2=pts[2],sy2=pts[3];
+        const sd=Math.hypot(sx-sx2,sy-sy2)||1;
+        const sdx=(sx-sx2)/sd*5000,sdy=(sy-sy2)/sd*5000;
+        // Extend end: continue from pts[n-4,n-3]→pts[n-2,n-1] direction
+        const lx=pts[pts.length-2],ly=pts[pts.length-1],lx2=pts[pts.length-4],ly2=pts[pts.length-3];
+        const ld=Math.hypot(lx-lx2,ly-ly2)||1;
+        const ldx=(lx-lx2)/ld*5000,ldy=(ly-ly2)/ld*5000;
+        const extPts=[sx+sdx,sy+sdy,...pts,lx+ldx,ly+ldy];
+        const totalLen=Math.hypot(lx+ldx-(sx+sdx),ly+ldy-(sy+sdy))||1;
+        line.setAttribute('points',extPts.join(' '));
+        line.setAttribute('stroke-dasharray',totalLen);
+        line.setAttribute('stroke-dashoffset',totalLen);
         function fly(now){
           const t=(now-startT-delay)/600;
           if(t<0){requestAnimationFrame(fly);return}
@@ -302,8 +310,7 @@ setTimeout(() => document.getElementById('enterBtn').classList.add('show'), 1800
           if(t<0.1){pp=t/0.1*0.08}
           else if(t<0.9){pp=0.08+(t-0.1)/0.8*0.84}
           else{pp=0.92+(t-0.9)/0.1*0.08}
-          const pos=-dist+pp*dist*2;
-          line.setAttribute('transform','translate('+ndx*pos+','+ndy*pos+')');
+          line.setAttribute('stroke-dashoffset',totalLen*(1-pp));
           line.style.opacity=t<0.08?t/0.08*0.6:t>0.85?(1-(t-0.85)/0.15)*0.6:0.6;
           requestAnimationFrame(fly);
         }
