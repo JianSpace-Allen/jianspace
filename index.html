@@ -9,10 +9,12 @@
 * { margin:0; padding:0; box-sizing:border-box; }
 body { background:#0a0a0a; min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; overflow:hidden; font-family:"Smiley Sans Oblique",sans-serif; }
 canvas { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; }
+@media (min-width:769px) { canvas { display:none; } }
 svg, .btn { z-index:1; }
 .desk-svg { width:95vw; }
-.mob-svg { display:none; width:190vw; transform:translateY(-17vh); }
+.mob-svg { display:none; width:190vw; transform:translateY(-25vh); }
 .mob-svg .char { animation:draw 0.8s ease forwards; }
+.mob-svg .char.done { stroke:#8B5CF6; filter:drop-shadow(0 0 8px #8B5CF6) drop-shadow(0 0 16px #a78bfa); transition:stroke 0.5s, filter 0.5s; }
 .mob-svg .char:nth-child(1){animation-delay:2.6s}
 .mob-svg .char:nth-child(2){animation-delay:2.0s}
 .mob-svg .char:nth-child(3){animation-delay:1.7s}
