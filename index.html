@@ -417,24 +417,22 @@ setTimeout(() => document.getElementById('enterBtn').classList.add('show'), 1800
   const startT=performance.now();
   mAssign.forEach((lines,ci)=>{
     if(!lines)return;
-    lines.slice(0,4).forEach((line,i)=>{
+    lines.slice(0,5).forEach((line,i)=>{
       const pts=line.getAttribute('points').split(/[ ,]+/).map(Number);
       const fx=pts[0],fy=pts[1],lx=pts[pts.length-2],ly=pts[pts.length-1];
-      const dx=lx-fx,dy=ly-fy;
-      const len=Math.sqrt(dx*dx+dy*dy)||1;
-      const ndx=dx/len,ndy=dy/len;
-      const dist=Math.max(8000,len*0.9);
+      const len=Math.sqrt((lx-fx)**2+(ly-fy)**2)||1;
+      line.setAttribute('stroke-dasharray',len);
+      line.setAttribute('stroke-dashoffset',len);
       const baseDelay=mLd[ci]===0?0:0.2;
       function fly(now){
         const t=(now-startT-(mLd[ci]-baseDelay+i*0.15)*1000)/800;
         if(t<0){requestAnimationFrame(fly);return}
         if(t>1){line.style.opacity='0';return}
         let pp;
-        if(t<0.1){pp=t/0.1*0.08}
-        else if(t<0.9){pp=0.08+(t-0.1)/0.8*0.84}
-        else{pp=0.92+(t-0.9)/0.1*0.08}
-        const pos=-dist+pp*dist*2;
-        line.setAttribute('transform','translate('+ndx*pos+','+ndy*pos+')');
+        if(t<0.1){pp=0.08+t/0.1*0.04}
+        else if(t<0.9){pp=0.12+(t-0.1)/0.8*0.76}
+        else{pp=0.88+(t-0.9)/0.1*0.12}
+        line.setAttribute('stroke-dashoffset',len*(1-pp));
         line.style.opacity=t<0.08?t/0.08*0.6:t>0.85?(1-(t-0.85)/0.15)*0.6:0.6;
         requestAnimationFrame(fly);
       }
