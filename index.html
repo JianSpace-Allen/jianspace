@@ -14,7 +14,8 @@ svg, .btn { z-index:1; }
 .desk-svg { width:95vw; }
 .mob-svg { display:none; width:190vw; transform:translateY(-25vh); }
 .mob-svg .char { animation:draw 0.8s ease forwards; }
-.mob-svg .char.done { stroke:#8B5CF6; filter:drop-shadow(0 0 12px #8B5CF6) drop-shadow(0 0 28px #8B5CF6) drop-shadow(0 0 50px #a78bfa); transition:stroke 0.5s, filter 0.5s; }
+.mob-svg .char.done { stroke:#8B5CF6; transition:stroke 0.5s; }
+.mob-svg .char.glow { filter:drop-shadow(0 0 8px #8B5CF6) drop-shadow(0 0 24px #a78bfa); transition:filter 0.5s; }
 .mob-svg .char:nth-child(1){animation-delay:2.6s}
 .mob-svg .char:nth-child(2){animation-delay:2.0s}
 .mob-svg .char:nth-child(3){animation-delay:1.7s}
@@ -281,6 +282,8 @@ setTimeout(() => document.getElementById('enterBtn').classList.add('show'), 3200
   });
   const mCharDelays=[2600,2000,1700,500,1400,200,800,1100,2300];
   mChars.forEach((ch,i)=>{setTimeout(()=>ch.classList.add('done'),mCharDelays[i]+800)});
+  // Glow after last letter (J: 2600+800=3400ms)
+  setTimeout(()=>mChars.forEach(ch=>ch.classList.add('glow')),3450);
 })();
 
 </script>
