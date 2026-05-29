@@ -105,22 +105,6 @@ body { background:#0a0a0a; min-height:100vh; display:flex; flex-direction:column
   </g>
 </svg>
 <svg class="mob-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 5554.8 8192">
-  <g id="decoLayerMob">
-    <polyline class="fly" points="-1846.9,3797.5 197.7,3797.5 310.7,3797.5 475.1,3797.5 608.7,3797.5 1105.5,3797.5 1239,3797.5 
-		1372.7,3797.5 1711.1,3797.5 1827.8,3797.5 1952,3797.5 2072.4,3797.5 2486,3797.5 2599,3797.5 2698.7,3797.5 2763.4,3797.5 
-		2787.1,3797.5 2896.9,3797.5 3248.3,3797.5 3354.5,3797.5 3525.7,3797.6 3659.2,3797.6 4011.4,3797.6 4124,3797.6 4292.8,3797.6 
-		4423.6,3797.6 4526.6,3797.6 4783.1,3797.6 4900.1,3797.6 5020.8,3797.6 5141.2,3797.6 5536.6,3797.6 5636.1,3797.6 5649.5,3797.6 
-		5814,3797.6 5947.5,3797.6 6299.7,3797.6 6412.7,3797.6 6573.9,3797.6 6649.2,3797.6 6710.6,3797.6 8804.7,3797.6 	"/>
-    <polyline class="fly" points="2819.9,8795.2 3302.2,4864.9 3311.2,4791.6 3337.7,4575.7 3342.9,4533.3 3374.6,4275.1 3409.5,3991 
-		3439,3750.6 3468.5,3510.1 3948,-396.7 	"/>
-    <polyline class="fly" points="4030.8,-496.3 3540.9,3495.1 3510.7,3740.8 3480.6,3986.6 3445,4276.8 3412.6,4540.6 3403.3,4616.4 
-		3380.2,4804.4 3366.7,4914.5 2878.2,8894.8 	"/>
-    <polyline class="fly" points="3870.2,-468.9 3383,3499.3 3353,3743.5 3323,3987.8 3287.5,4276.3 3255.4,4538.5 3255,4541.8 
-		3223.2,4800.9 3219.3,4832.3 2723.9,8867.4 	"/>
-    <polyline class="fly" points="1666,-468.9 1982.1,463.1 2179.5,1044.8 2611,2316.9 2734,2679.3 2734,2679.3 2933.4,3267.2 
-		2933.5,3267.3 3011.4,3497.2 3035,3566.6 3089.4,3727.2 3112.8,3796 3181.6,3998.8 3223.5,4122.4 3223.5,4122.4 3265.4,4245.8 
-		3349.2,4492.7 3459.3,4817.2 4079.4,6645.3 4277.6,7229.4 4277.6,7229.4 4568.8,8087.9 4648.1,8321.5 	"/>
-  </g>
 <g id="logoGroupMob">
     <polygon class="char" points="2321.8,3582.4 2288.7,3851.8 2211.5,3906.1 2251.2,3582.4"/>
     <polygon class="char" points="3197.8,3582.4 3164.7,3851.8 3085.1,3851.8 3028,3683.5 3007.4,3851.8 2947.6,3851.8 2980.7,3582.4 3040.4,3582.4 3104.2,3770.4 3127.3,3582.4"/>
@@ -265,59 +249,6 @@ setTimeout(() => document.getElementById('enterBtn').classList.add('show'), 1800
   });
   const mCharDelays=[2600,2000,1700,500,1400,200,800,1100,2300];
   mChars.forEach((ch,i)=>{setTimeout(()=>ch.classList.add('done'),mCharDelays[i]+800)});
-
-  // Mobile fly lines (translate animation, same as desktop)
-  const mFly=document.querySelectorAll('#decoLayerMob .fly');
-  if(mFly.length){
-    const mCenters=[];
-    mChars.forEach(el=>{const b=el.getBBox();mCenters.push({cx:b.x+b.width/2,cy:b.y+b.height/2})});
-    const mAssign=[];
-    mFly.forEach(line=>{
-      const pts=line.getAttribute('points').split(/[ ,]+/).map(Number);
-      let sx=0,sy=0,n=0;
-      for(let i=0;i<pts.length;i+=2){sx+=pts[i];sy+=pts[i+1];n++}
-      const mx=sx/n,my=sy/n;
-      let best=0,bestD=Infinity;
-      mCenters.forEach((c,i)=>{const d=Math.hypot(mx-c.cx,my-c.cy);if(d<bestD){bestD=d;best=i}});
-      if(!mAssign[best])mAssign[best]=[];
-      mAssign[best].push(line);
-    });
-    const mLd=[2600,2000,1700,500,1400,200,800,1100,2300];
-    const startT=performance.now();
-    mAssign.forEach((lines,ci)=>{
-      if(!lines)return;
-      const delay=mLd[ci]; // base delay for this letter
-      lines.slice(0,5).forEach((line,i)=>{
-        const pts=line.getAttribute('points').split(/[ ,]+/).map(Number);
-        // Extend start: continue from pts[2,3]→pts[0,1] direction
-        const sx=pts[0],sy=pts[1],sx2=pts[2],sy2=pts[3];
-        const sd=Math.hypot(sx-sx2,sy-sy2)||1;
-        const sdx=(sx-sx2)/sd*5000,sdy=(sy-sy2)/sd*5000;
-        // Extend end: continue from pts[n-4,n-3]→pts[n-2,n-1] direction
-        const lx=pts[pts.length-2],ly=pts[pts.length-1],lx2=pts[pts.length-4],ly2=pts[pts.length-3];
-        const ld=Math.hypot(lx-lx2,ly-ly2)||1;
-        const ldx=(lx-lx2)/ld*5000,ldy=(ly-ly2)/ld*5000;
-        const extPts=[sx+sdx,sy+sdy,...pts,lx+ldx,ly+ldy];
-        const totalLen=Math.hypot(lx+ldx-(sx+sdx),ly+ldy-(sy+sdy))||1;
-        line.setAttribute('points',extPts.join(' '));
-        line.setAttribute('stroke-dasharray',totalLen);
-        line.setAttribute('stroke-dashoffset',totalLen);
-        function fly(now){
-          const t=(now-startT-delay)/600;
-          if(t<0){requestAnimationFrame(fly);return}
-          if(t>1){line.style.opacity='0';return}
-          let pp;
-          if(t<0.1){pp=t/0.1*0.08}
-          else if(t<0.9){pp=0.08+(t-0.1)/0.8*0.84}
-          else{pp=0.92+(t-0.9)/0.1*0.08}
-          line.setAttribute('stroke-dashoffset',totalLen*(1-pp));
-          line.style.opacity=t<0.08?t/0.08*0.6:t>0.85?(1-(t-0.85)/0.15)*0.6:0.6;
-          requestAnimationFrame(fly);
-        }
-        requestAnimationFrame(fly);
-      });
-    });
-  }
 })();
 
 </script>
