@@ -8,7 +8,7 @@
 * { margin:0; padding:0; box-sizing:border-box; }
 body { background:#0a0a0a; min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; overflow:hidden; font-family:"Smiley Sans Oblique",sans-serif; }
 svg { width:95vw; }
-@media (max-width:768px) { svg { width:180vw; } .btn { transform:scale(0.75); bottom:8vh; } }
+@media (max-width:768px) { svg { width:180vw; } .btn { padding:.5rem 1rem; font-size:.7rem; white-space:nowrap; bottom:8vh; } }
 .char { fill:#0a0a0a; stroke:#fff; stroke-width:4; stroke-linecap:round; stroke-linejoin:round; animation:draw 0.8s ease forwards; }
 .char:nth-child(1){animation-delay:2.4s}
 .char:nth-child(2){animation-delay:1.8s}
@@ -120,7 +120,7 @@ function animateFlyLine(line, delay, dur) {
   const dx = lx - fx, dy = ly - fy;
   const len = Math.sqrt(dx*dx+dy*dy) || 1;
   const ndx = dx/len, ndy = dy/len;
-  const dist = 5000;
+  const dist = window.innerWidth < 769 ? 8000 : 5000;
 
   function fly(now) {
     const t = (now - startT - delay) / dur;
