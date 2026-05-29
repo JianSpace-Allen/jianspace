@@ -419,16 +419,8 @@ setTimeout(() => document.getElementById('enterBtn').classList.add('show'), 1800
     if(!lines)return;
     lines.slice(0,5).forEach((line,i)=>{
       const pts=line.getAttribute('points').split(/[ ,]+/).map(Number);
-      // Extend line ends to outside viewBox (5555x8192)
-      const sx=pts[0],sy=pts[1],sx2=pts[2],sy2=pts[3];
-      const dsi=Math.hypot(sx-sx2,sy-sy2)||1;
-      const sdx=(sx-sx2)/dsi*5000,sdy=(sy-sy2)/dsi*5000;
-      const lx=pts[pts.length-2],ly=pts[pts.length-1],lx2=pts[pts.length-4],ly2=pts[pts.length-3];
-      const dli=Math.hypot(lx-lx2,ly-ly2)||1;
-      const ldx=(lx-lx2)/dli*5000,ldy=(ly-ly2)/dli*5000;
-      const extPts=[sx+sdx,sy+sdy,...pts,lx+ldx,ly+ldy];
-      line.setAttribute('points',extPts.join(' '));
-      const len=Math.hypot(lx+ldx-(sx+sdx),ly+ldy-(sy+sdy))||1;
+      const fx=pts[0],fy=pts[1],lx=pts[pts.length-2],ly=pts[pts.length-1];
+      const len=Math.sqrt((lx-fx)**2+(ly-fy)**2)||1;
       line.setAttribute('stroke-dasharray',len);
       line.setAttribute('stroke-dashoffset',len);
       const baseDelay=mLd[ci]===0?0:0.2;
