@@ -36,13 +36,13 @@ body { background:#0a0a0a; min-height:100vh; display:flex; flex-direction:column
 .arc { fill:none; stroke:#fff; stroke-width:3; stroke-linecap:round; stroke-linejoin:round; }
 @keyframes glowPulse { 0%,100%{filter:drop-shadow(0 0 4px #8B5CF6)} 50%{filter:drop-shadow(0 0 22px #8B5CF6) drop-shadow(0 0 44px #a78bfa)} }
 #logoGroup.glow, #logoGroupMob.glow { animation:glowPulse 3s ease-in-out infinite; }
-.btn { padding:.7rem 2.2rem; border:2px solid transparent; background:#0a0a0a; color:#8B5CF6; font-family:"Smiley Sans Oblique",sans-serif; font-size:1rem; letter-spacing:.18em; cursor:pointer; border-radius:999px; position:fixed; bottom:12vh; left:50%; transform:translateX(-50%); opacity:0; background-clip:padding-box; }
-.btn::before { content:''; position:absolute; top:-3px;left:-3px;right:-3px;bottom:-3px; border-radius:999px; background:conic-gradient(from 0deg,#8B5CF6,#a78bfa,#fff,#8B5CF6); z-index:-1; animation:spin 2.5s linear infinite; opacity:0; transition:opacity 0.5s; }
+.btn { padding:.7rem 2.2rem; border:2px solid #8B5CF6; background:transparent; color:#8B5CF6; font-family:"Smiley Sans Oblique",sans-serif; font-size:1rem; letter-spacing:.18em; cursor:pointer; border-radius:999px; position:fixed; bottom:12vh; left:50%; transform:translateX(-50%); opacity:0; overflow:visible; }
+.btn::after { content:''; position:absolute; top:-4px;left:-4px;right:-4px;bottom:-4px; border-radius:999px; background:conic-gradient(from 0deg,transparent 70%,rgba(255,255,255,0.9) 85%,#a78bfa 95%,transparent 100%); z-index:-1; animation:orbit 2s linear infinite; opacity:0; transition:opacity 0.5s; }
 .btn.show { animation:btnIn 0.8s ease-out forwards; }
-.btn.show::before { opacity:1; }
-.btn:hover { background:#1a102e; color:#fff; }
+.btn.show::after { opacity:1; }
+.btn:hover { background:#1a102e; color:#fff; border-color:#a78bfa; }
 @keyframes btnIn { from{opacity:0;transform:translateX(-50%) translateY(18px)} to{opacity:1;transform:translateX(-50%) translateY(0)} }
-@keyframes spin { to{transform:rotate(360deg)} }
+@keyframes orbit { to{transform:rotate(360deg)} }
 </style>
 </head>
 <body>
