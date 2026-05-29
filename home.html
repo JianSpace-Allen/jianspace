@@ -54,7 +54,7 @@ aside.collapsed #logo { left: 90px; width: 276px; }
 }
 #sidebarToggle:hover { background: #a78bfa; border-color: #a78bfa; }
 #sidebarToggle.shifted { left: 40px; }
-#logo { position:fixed; left:1.5rem; top:2.5rem; width:190px; cursor:pointer; user-select:none; filter:drop-shadow(0 0 0 transparent); transition:filter 1.8s ease, left 0.8s ease, top 0.8s ease, width 0.8s ease; z-index:105; }
+#logo { position:fixed; left:1.5rem; top:2.5rem; width:190px; cursor:pointer; user-select:none; filter:drop-shadow(0 0 0 transparent); transition:filter 1.8s ease, left 0.8s ease, width 0.8s ease; z-index:105; }
 #logo .char { fill:#8B5CF6; }
 #logo.done { filter:drop-shadow(0 0 1px #fff) drop-shadow(0 0 3px #8B5CF6); }
 @keyframes breathe { 0%,100%{filter:drop-shadow(0 0 0 transparent)} 50%{filter:drop-shadow(0 0 2px #fff) drop-shadow(0 0 4px #8B5CF6) drop-shadow(0 0 8px #a78bfa)} }
@@ -192,8 +192,7 @@ main.expanded .masonry::before { height:75px; }
 main.expanded .masonry { columns:3 110px; }
   .masonry .card { margin-bottom:.35rem; }
   aside.collapsed { width:0; padding:0; overflow:hidden; }
-  aside.collapsed #logo { left:calc(.5rem + 5px); width:100px; top:1.7rem; }
-  main.expanded .masonry::before { height:39px; }
+  aside.collapsed #logo { display:none; }
 }
 
 /* ====== lightbox ====== */
