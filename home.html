@@ -25,9 +25,35 @@ aside {
   background: #0d0d0d;
   border-right: 1px solid #1a1a1a;
   padding: 2.5rem 1.5rem;
-  overflow-y: auto;
+  overflow: hidden;
   z-index: 100;
+  transition: width 0.3s ease;
 }
+aside.collapsed { width: 40px; padding: 2.5rem 0.5rem; overflow: visible; }
+aside.collapsed nav { display: none; }
+aside.collapsed #logo { position: fixed; left: 90px; top: 2.5rem; width: 276px; z-index: 105; }
+#sidebarToggle {
+  position: fixed;
+  left: 220px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 101;
+  width: 18px; height: 56px;
+  background: #8B5CF6;
+  border: 1px solid #8B5CF6;
+  border-radius: 0 6px 6px 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 0.7rem;
+  text-shadow: 0 0 8px #fff;
+  transition: left 0.3s ease, color 0.15s;
+  user-select: none;
+}
+#sidebarToggle:hover { background: #a78bfa; border-color: #a78bfa; }
+#sidebarToggle.shifted { left: 40px; }
 #logo { width:190px; display:block; cursor:pointer; margin-bottom:1rem; user-select:none; filter:drop-shadow(0 0 0 transparent); transition:filter 1.8s ease; }
 #logo .char { fill:#8B5CF6; }
 #logo.done { filter:drop-shadow(0 0 1px #fff) drop-shadow(0 0 3px #8B5CF6); }
@@ -85,7 +111,10 @@ main {
   flex: 1;
   display: flex;
   flex-direction: column;
+  transition: margin-left 0.3s ease;
 }
+main.expanded { margin-left: 40px; }
+main.expanded .masonry::before { content:''; display:block; height:75px; }
 
 /* ====== theme bar ====== */
 #themeBar {
@@ -116,7 +145,7 @@ main {
 /* ====== masonry grid ====== */
 .masonry {
   padding: 1.5rem 2rem;
-  columns: 4 250px;
+  columns: 5 250px;
   column-gap: 0.75rem;
 }
 .masonry .card {
@@ -233,6 +262,8 @@ main {
   </div>
   <div class="masonry" id="masonry"></div>
 </main>
+
+<div id="sidebarToggle" onclick="toggleSidebar()" title="收起侧栏">&#9664;</div>
 
 <div class="lightbox" id="lightbox" onclick="this.classList.remove('active')">
   <span class="close">&times;</span>
@@ -380,6 +411,17 @@ sidebarLinks.forEach(a => {
     renderAll();
   };
 });
+
+// ====== Sidebar toggle ======
+function toggleSidebar() {
+  const aside = document.querySelector('aside');
+  const main = document.querySelector('main');
+  const btn = document.getElementById('sidebarToggle');
+  aside.classList.toggle('collapsed');
+  main.classList.toggle('expanded');
+  btn.classList.toggle('shifted');
+  btn.innerHTML = aside.classList.contains('collapsed') ? '&#9654;' : '&#9664;';
+}
 
 // initial render
 renderAll();
