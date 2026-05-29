@@ -120,7 +120,8 @@ function animateFlyLine(line, delay, dur) {
   const dx = lx - fx, dy = ly - fy;
   const len = Math.sqrt(dx*dx+dy*dy) || 1;
   const ndx = dx/len, ndy = dy/len;
-  const dist = window.innerWidth < 769 ? 8000 : 5000;
+  const svgW = document.querySelector('svg').getBoundingClientRect().width;
+  const dist = svgW / 8192 * 80000;
 
   function fly(now) {
     const t = (now - startT - delay) / dur;
