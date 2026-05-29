@@ -31,7 +31,7 @@ aside {
 }
 aside.collapsed { width: 40px; padding: 2.5rem 0.5rem; overflow: visible; }
 aside.collapsed nav { display: none; }
-aside.collapsed #logo { left: 90px; width: 276px; }
+aside.collapsed #logo { display:none; }
 #sidebarToggle {
   position: fixed;
   left: 240px;
@@ -116,7 +116,7 @@ main {
 }
 main.expanded { margin-left: 40px; }
 .masonry::before { content:''; display:block; height:0; transition:height 0.8s ease; }
-main.expanded .masonry::before { height:75px; }
+main.expanded .masonry::before { height:0; }
 
 /* ====== theme bar ====== */
 #themeBar {
@@ -435,27 +435,14 @@ sidebarLinks.forEach(a => {
 });
 
 // ====== Sidebar toggle ======
-let scrollHandler = null;
 function toggleSidebar() {
   const btn = document.getElementById('sidebarToggle');
   const aside = document.querySelector('aside');
   const main = document.querySelector('main');
-  const logo = document.getElementById('logo');
   const collapsed = aside.classList.toggle('collapsed');
   main.classList.toggle('expanded');
   btn.classList.toggle('shifted');
   btn.innerHTML = collapsed ? '&#9654;' : '&#9664;';
-  if (collapsed) {
-    logo.style.transition = 'left 0.8s ease, width 0.8s ease';
-    scrollHandler = () => {
-      logo.style.top = Math.max(-100, 40 - window.scrollY) + 'px';
-    };
-    window.addEventListener('scroll', scrollHandler, {passive:true});
-  } else {
-    logo.style.top = '';
-    logo.style.transition = '';
-    if (scrollHandler) { window.removeEventListener('scroll', scrollHandler); scrollHandler = null; }
-  }
 }
 
 // initial render
