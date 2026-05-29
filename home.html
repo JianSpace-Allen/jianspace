@@ -452,11 +452,8 @@ function toggleSidebar() {
     };
     window.addEventListener('scroll', scrollHandler, {passive:true});
   } else {
-    logo.style.top = '2.5rem';
-    window.scrollTo({top:0,behavior:'smooth'});
-    setTimeout(()=>{
-      logo.style.transition = '';
-    },800);
+    logo.style.top = '';
+    logo.style.transition = '';
     if (scrollHandler) { window.removeEventListener('scroll', scrollHandler); scrollHandler = null; }
   }
 }
