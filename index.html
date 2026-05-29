@@ -7,8 +7,20 @@
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
 body { background:#0a0a0a; min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; overflow:hidden; font-family:"Smiley Sans Oblique",sans-serif; }
-svg { width:95vw; }
-@media (max-width:768px) { svg { width:180vw; } .btn { padding:.5rem 1rem; font-size:.7rem; white-space:nowrap; bottom:8vh; } }
+.desk-svg { width:95vw; }
+.mob-svg { display:none; width:95vw; max-width:460px; }
+.mob-svg .char { opacity:0; animation:draw 0.8s ease forwards, mobFade 0.8s ease forwards; }
+.mob-svg .char:nth-child(1){animation-delay:2.4s,2.4s}
+.mob-svg .char:nth-child(2){animation-delay:1.8s,1.8s}
+.mob-svg .char:nth-child(3){animation-delay:1.5s,1.5s}
+.mob-svg .char:nth-child(4){animation-delay:0.3s,0.3s}
+.mob-svg .char:nth-child(5){animation-delay:1.2s,1.2s}
+.mob-svg .char:nth-child(6){animation-delay:0s,0s}
+.mob-svg .char:nth-child(7){animation-delay:0.6s,0.6s}
+.mob-svg .char:nth-child(8){animation-delay:0.9s,0.9s}
+.mob-svg .char:nth-child(9){animation-delay:2.1s,2.1s}
+@keyframes mobFade { to{opacity:1} }
+@media (max-width:768px) { .desk-svg { display:none; } .mob-svg { display:block; } .btn { padding:.5rem 1rem; font-size:.7rem; white-space:nowrap; bottom:8vh; } }
 .char { fill:#0a0a0a; stroke:#fff; stroke-width:4; stroke-linecap:round; stroke-linejoin:round; animation:draw 0.8s ease forwards; }
 .char:nth-child(1){animation-delay:2.4s}
 .char:nth-child(2){animation-delay:1.8s}
@@ -24,7 +36,7 @@ svg { width:95vw; }
 .fly { fill:none; stroke:#fff; stroke-width:4; stroke-linecap:round; stroke-linejoin:round; opacity:0; }
 .arc { fill:none; stroke:#fff; stroke-width:3; stroke-linecap:round; stroke-linejoin:round; }
 @keyframes glowPulse { 0%,100%{filter:drop-shadow(0 0 4px #8B5CF6)} 50%{filter:drop-shadow(0 0 22px #8B5CF6) drop-shadow(0 0 44px #a78bfa)} }
-#logoGroup.glow { animation:glowPulse 3s ease-in-out infinite; }
+#logoGroup.glow, #logoGroupMob.glow { animation:glowPulse 3s ease-in-out infinite; }
 .btn { padding:.7rem 2.2rem; border:1px solid #8B5CF6; background:transparent; color:#8B5CF6; font-family:inherit; font-size:1rem; letter-spacing:.18em; cursor:pointer; border-radius:3px; position:fixed; bottom:12vh; left:50%; transform:translateX(-50%); opacity:0; }
 .btn.show { animation:btnIn 0.8s ease-out forwards; }
 .btn:hover { background:#8B5CF6; color:#fff; }
@@ -33,7 +45,7 @@ svg { width:95vw; }
 </head>
 <body>
 
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8192 5311.3">
+<svg class="desk-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8192 5311.3">
   <g id="logoGroup" transform="translate(0,-550)">
     <polygon class="char" points="3190,2542.1 3164.1,2753 3103.7,2795.5 3134.7,2542.1"/>
     <polygon class="char" points="5320.2,2621.3 5443.4,2621.3 5424.4,2668 5314.5,2668 5309.2,2710.5 5432.5,2710.5 5414,2753 5257.3,2753 5283.2,2542.1 5453.1,2542.1 5435,2581.7 5325.1,2581.7"/>
@@ -93,6 +105,19 @@ svg { width:95vw; }
     </g>
   </g>
 </svg>
+<svg class="mob-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 5554.8 8192">
+  <g id="logoGroupMob">
+    <polygon class="char" points="2321.8,3582.4 2288.7,3851.8 2211.5,3906.1 2251.2,3582.4"/>
+    <polygon class="char" points="3197.8,3582.4 3164.7,3851.8 3085.1,3851.8 3028,3683.5 3007.4,3851.8 2947.6,3851.8 2980.7,3582.4 3040.4,3582.4 3104.2,3770.4 3127.3,3582.4"/>
+    <path class="char" d="M2705.8,3582.4h-86.9l-92.8,269.4h59.7l20.7-54.3h65.6l7.6,54.3h63.7L2705.8,3582.4z M2627.2,3743.2l22.7-59.7h6.3l8.3,59.7H2627.2z"/>
+    <path class="char" d="M1988.7,3582.4l-26.4,215.2l0,0c-3.8,31-30.1,54.3-61.4,54.3h-107.8c-29.1,0-51.6-25.4-48-54.3l0,0l6.7-54.3h59.7l-5,40.7l0,0c-0.9,7.2,4.7,13.6,12,13.6h59.5c7.8,0,14.4-5.8,15.4-13.6l0,0l24.8-201.6L1988.7,3582.4L1988.7,3582.4z"/>
+    <polygon class="char" points="3705.8,4155.4 3863.2,4155.4 3838.9,4215.2 3698.4,4215.2 3691.8,4269.5 3849.2,4269.5 3825.5,4323.8 3625.4,4323.8 3658.5,4054.4 3875.6,4054.4 3852.4,4104.9 3711.9,4104.9"/>
+    <path class="char" d="M3421.4,4054.4c27.1,0,48,23.7,44.7,50.5l0,0l-3.1,25.3h-70.6l1.6-12.7l0,0c0.8-6.7-4.4-12.7-11.2-12.7h-61.4c-7.2,0-13.4,5.4-14.3,12.7l0,0l-17,138.4l0,0c-0.9,7.2,4.7,13.6,12,13.6h59.5c7.8,0,14.4-5.8,15.4-13.6l0,0l1.7-13.6h70.6l-3.3,27.1l0,0c-3.8,31-30.1,54.3-61.4,54.3h-107.7c-29.1,0-51.6-25.4-48-54.3l0,0l20.2-164.6l0,0c3.5-28.9,28.1-50.5,57.2-50.5L3421.4,4054.4L3421.4,4054.4z"/>
+    <path class="char" d="M2257,4104.9l-3.1,25.5h-70.6l1.6-12.9l0,0c0.8-6.7-4.4-12.7-11.2-12.7h-61.4c-7.2,0-13.4,5.4-14.3,12.7l0,0l-3.2,25.8l0,0c-0.8,6.6,4,12.7,10.7,13.3l98.5,9.5c24.6,2.4,42.4,24.6,39.4,49.1l0,0l-6.7,54.3c-1.9,15.5-9.4,29.1-20.4,38.8c-11,9.7-25.4,15.5-40.9,15.5h-107.7c-29.1,0-51.6-25.4-48-54.3l3.3-27.1h59.7c0,0-1.8,14.5-1.8,15c0,6.6,5.3,12.1,12.1,12.1h59.5c7.8,0,14.4-5.8,15.4-13.6l3.3-27.1l0,0c0.9-7.4-4.5-14.1-11.8-14.9l-86.3-8.9c-24.6-2.6-42.4-24.8-39.4-49.5l0,0l6.2-50.5c1.8-14.4,8.8-27.1,19-36.1c10.2-9.1,23.6-14.5,38.2-14.5h115.3C2239.3,4054.4,2260.3,4078,2257,4104.9z"/>
+    <path class="char" d="M2991.6,4054.4h-86.9l-92.8,269.4h59.7l20.7-54.3h65.6l7.6,54.3h63.7L2991.6,4054.4z M2913,4215.2l22.7-59.7h6.3l8.3,59.7H2913z"/>
+    <g><path class="char" d="M2615.5,4054.4h-166.2l-33.1,269.4h59.7l13.3-108.6h97.2c34.4,0,63.3-25.6,67.5-59.7c0,0,6.6-54.3,6.6-56.2C2660.6,4074.9,2640.7,4054.4,2615.5,4054.4z M2585.1,4142.9c-0.9,7.2-7,12.7-14.3,12.7h-74.5l6.2-50.5h74.5c6.3,0,11.2,5.1,11.2,11.2C2588.3,4116.6,2585.1,4142.9,2585.1,4142.9z"/></g>
+  </g>
+</svg>
 <button class="btn" id="enterBtn" onclick="document.body.style.transition='opacity 0.3s';document.body.style.opacity='0';setTimeout(function(){window.location='http://jianspace.cn/home.html'},300)">点击进入 JIANSPACE</button>
 
 <script>
@@ -120,8 +145,7 @@ function animateFlyLine(line, delay, dur) {
   const dx = lx - fx, dy = ly - fy;
   const len = Math.sqrt(dx*dx+dy*dy) || 1;
   const ndx = dx/len, ndy = dy/len;
-  const svgW = document.querySelector('svg').getBoundingClientRect().width;
-  const dist = svgW / 8192 * 80000;
+  const dist = 5000;
 
   function fly(now) {
     const t = (now - startT - delay) / dur;
@@ -206,7 +230,7 @@ document.querySelectorAll('.arc').forEach(arc => {
   requestAnimationFrame(animArc);
 });
 
-setTimeout(() => document.getElementById('logoGroup').classList.add('glow'), 3000);
+setTimeout(() => { document.getElementById('logoGroup').classList.add('glow'); document.getElementById('logoGroupMob').classList.add('glow'); }, 3000);
 setTimeout(() => document.getElementById('enterBtn').classList.add('show'), 1800);
 </script>
 </body>
