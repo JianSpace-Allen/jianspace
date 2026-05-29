@@ -105,6 +105,13 @@ body { background:#0a0a0a; min-height:100vh; display:flex; flex-direction:column
   </g>
 </svg>
 <svg class="mob-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 5554.8 8192">
+  <g id="decoLayerMob">
+    <polyline class="fly" points="7516,4104.9 5539.7,4104.9 5468.8,4104.9 5408.8,4104.9 5140.6,4104.9 5026.6,4104.9 4671.2,4104.9 4536.4,4104.9 4370.5,4104.9 4256.4,4104.9 3775.2,4104.9 3695.3,4104.9 3653.7,4104.9 3565.8,4104.9 3131.5,4104.9 3000.5,4104.9 2831,4104.9 2717.4,4104.9 2361.9,4104.9 2227.2,4104.9 2053.3,4104.9 1947.2,4104.9 1592.7,4104.9 1457.8,4104.9 1336.6,4104.9 1292,4104.9 1247.4,4104.9 1177.9,4104.9 1043.1,4104.9 678.2,4104.9 594.9,4104.9 556.7,4104.9 465.6,4104.9 463.1,4104.9 170.3,4104.9 -80.4,4104.9 -215.2,4104.9 -716.5,4104.9 -851.3,4104.9 -1017,4104.9 -1131.2,4104.9 -3233.1,4104.9"/>
+    <polyline class="fly" points="3690.7,-432.8 3447.7,1546.6 3212.2,3464.8 3182.8,3704.7 3166.9,3834.2 3153.3,3944.6 3138.3,4066.9 3118.5,4228 3086.9,4485.6 3055.3,4743.3 3013.7,5081.7 2954.8,5561.5 2564.9,8737.5"/>
+    <polyline class="fly" points="2499.7,8694.2 2981,4773.5 2992.5,4679.5 3024.3,4420.5 3040.2,4291.2 3040.2,4291.2 3056.1,4161.6 3080.2,3965.2 3091.1,3876.8 3108.6,3733.9 3120.7,3635.7 3150.3,3394.5 3355.2,1725.4 3631.2,-523"/>
+    <polyline class="fly" points="1666,-468.9 1982.1,463.1 2179.5,1044.8 2611,2316.9 2734,2679.3 2734,2679.3 2933.4,3267.2 2933.5,3267.3 3011.4,3497.2 3035,3566.6 3089.4,3727.2 3112.8,3796 3181.6,3998.8 3223.5,4122.4 3223.5,4122.4 3265.4,4245.8 3349.2,4492.7 3459.3,4817.2 4079.4,6645.3 4277.6,7229.4 4277.6,7229.4 4568.8,8087.9 4648.1,8321.5"/>
+    <polyline class="fly" points="-872.8,6073.4 573.6,5057 731.7,4945.9 963,4783.3 1150.5,4651.6 1848,4161.5 2035.6,4029.7 2223.2,3897.9 2410.8,3766 2410.8,3766 2617.2,3621 2744,3531.9 2791.9,3498.2 2796,3495.3 2880.4,3436 2900.1,3422.1 2966.6,3375.5 3020.6,3337.5 3040.9,3323.2 3596.9,2932.5 3688.5,2868.2 3786.3,2799.4 3945,2687.9 4175.8,2525.7 4363.3,2394 4856.6,2047.4 4999.2,1947.2 5246.2,1773.5 5433.6,1641.9 5804.6,1381.2"/>
+  </g>
 <g id="logoGroupMob">
     <polygon class="char" points="2321.8,3582.4 2288.7,3851.8 2211.5,3906.1 2251.2,3582.4"/>
     <polygon class="char" points="3197.8,3582.4 3164.7,3851.8 3085.1,3851.8 3028,3683.5 3007.4,3851.8 2947.6,3851.8 2980.7,3582.4 3040.4,3582.4 3104.2,3770.4 3127.3,3582.4"/>
@@ -249,6 +256,52 @@ setTimeout(() => document.getElementById('enterBtn').classList.add('show'), 1800
   });
   const mCharDelays=[2600,2000,1700,500,1400,200,800,1100,2300];
   mChars.forEach((ch,i)=>{setTimeout(()=>ch.classList.add('done'),mCharDelays[i]+800)});
+
+  // Mobile fly lines (translate animation, same as desktop)
+  const mFly=document.querySelectorAll('#decoLayerMob .fly');
+  if(mFly.length){
+    const mCenters=[];
+    mChars.forEach(el=>{const b=el.getBBox();mCenters.push({cx:b.x+b.width/2,cy:b.y+b.height/2})});
+    const mAssign=[];
+    mFly.forEach(line=>{
+      const pts=line.getAttribute('points').split(/[ ,]+/).map(Number);
+      let sx=0,sy=0,n=0;
+      for(let i=0;i<pts.length;i+=2){sx+=pts[i];sy+=pts[i+1];n++}
+      const mx=sx/n,my=sy/n;
+      let best=0,bestD=Infinity;
+      mCenters.forEach((c,i)=>{const d=Math.hypot(mx-c.cx,my-c.cy);if(d<bestD){bestD=d;best=i}});
+      if(!mAssign[best])mAssign[best]=[];
+      mAssign[best].push(line);
+    });
+    const mLd=[2600,2000,1700,500,1400,200,800,1100,2300];
+    const startT=performance.now();
+    mAssign.forEach((lines,ci)=>{
+      if(!lines)return;
+      const delay=mLd[ci]; // base delay for this letter
+      lines.slice(0,5).forEach((line,i)=>{
+        const pts=line.getAttribute('points').split(/[ ,]+/).map(Number);
+        const fx=pts[0],fy=pts[1],lx=pts[pts.length-2],ly=pts[pts.length-1];
+        const dx=lx-fx,dy=ly-fy;
+        const len=Math.sqrt(dx*dx+dy*dy)||1;
+        const ndx=dx/len,ndy=dy/len;
+        const dist=Math.max(8000,len*0.9);
+        function fly(now){
+          const t=(now-startT-delay)/600;
+          if(t<0){requestAnimationFrame(fly);return}
+          if(t>1){line.style.opacity='0';return}
+          let pp;
+          if(t<0.1){pp=t/0.1*0.08}
+          else if(t<0.9){pp=0.08+(t-0.1)/0.8*0.84}
+          else{pp=0.92+(t-0.9)/0.1*0.08}
+          const pos=-dist+pp*dist*2;
+          line.setAttribute('transform','translate('+ndx*pos+','+ndy*pos+')');
+          line.style.opacity=t<0.08?t/0.08*0.6:t>0.85?(1-(t-0.85)/0.15)*0.6:0.6;
+          requestAnimationFrame(fly);
+        }
+        requestAnimationFrame(fly);
+      });
+    });
+  }
 })();
 
 </script>
