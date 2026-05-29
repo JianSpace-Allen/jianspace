@@ -106,6 +106,10 @@ body { background:#0a0a0a; min-height:100vh; display:flex; flex-direction:column
   </g>
 </svg>
 <svg class="mob-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 5554.8 8192">
+  <g id="decoLayerMob">
+    <polyline class="fly" points="-1895.6,3582.4 218.1,3582.4 332.4,3582.4 498.1,3582.4 577.5,3582.4 632.9,3582.4 1134.2,3582.4 1269,3582.4 1374.4,3582.4 1836.4,3582.4 1880.8,3582.4 1938.1,3582.4 1969.2,3582.4 2002.3,3582.4 2527.3,3582.4 2552.2,3582.4 2641.4,3582.4 2641.4,3582.4 2807.2,3582.4 2942,3582.4 3296.6,3582.4 3402.4,3582.4 3576.6,3582.4 3711.3,3582.4 4066.7,3582.4 4180.3,3582.4 4349.6,3582.4 4480.4,3582.4 4936.6,3582.4 4977.7,3582.4 5069.6,3582.4 5099.3,3582.4 5605.8,3582.4 5719.8,3582.4 5885.8,3582.4 6020.5,3582.4 6375.9,3582.4 6490,3582.4 6790.7,3582.4 6845.6,3582.4 6919.3,3582.4 8853.5,3582.4"/>
+    <polyline class="fly" points="3690.7,-432.8 3447.7,1546.6 3212.2,3464.8 3182.8,3704.7 3166.9,3834.2 3153.3,3944.6 3138.3,4066.9 3118.5,4228 3086.9,4485.6 3055.3,4743.3 3013.7,5081.7 2954.8,5561.5 2564.9,8737.5"/>
+  </g>
   <g id="logoGroupMob">
     <polygon class="char" points="2321.8,3582.4 2288.7,3851.8 2211.5,3906.1 2251.2,3582.4"/>
     <polygon class="char" points="3197.8,3582.4 3164.7,3851.8 3085.1,3851.8 3028,3683.5 3007.4,3851.8 2947.6,3851.8 2980.7,3582.4 3040.4,3582.4 3104.2,3770.4 3127.3,3582.4"/>
@@ -122,7 +126,7 @@ body { background:#0a0a0a; min-height:100vh; display:flex; flex-direction:column
 
 <script>
 // Exact dasharray per char
-document.querySelectorAll('.char').forEach(el => {
+document.querySelectorAll('.desk-svg .char').forEach(el => {
   let len = 0;
   if (el.tagName === 'path') {
     len = el.getTotalLength();
@@ -164,7 +168,7 @@ function animateFlyLine(line, delay, dur) {
 }
 
 // Auto-assign fly lines to nearest char
-const charEls = document.querySelectorAll('.char');
+const charEls = document.querySelectorAll('.desk-svg .char');
 const charCenters = [];
 charEls.forEach(el => {
   const b = el.getBBox();
@@ -172,7 +176,7 @@ charEls.forEach(el => {
 });
 
 const lineAssignments = [];
-document.querySelectorAll('.fly').forEach(line => {
+document.querySelectorAll('.desk-svg .fly').forEach(line => {
   const pts = line.getAttribute('points').split(/[ ,]+/).map(Number);
   let sx=0, sy=0, n=0;
   for (let i=0; i<pts.length; i+=2) { sx+=pts[i]; sy+=pts[i+1]; n++; }
@@ -196,7 +200,7 @@ lineAssignments.forEach((lines, ci) => {
 
 // Per-char purple
 const charDelays = [2400,1800,1500,300,1200,0,600,900,2100];
-document.querySelectorAll('.char').forEach((ch,i) => {
+document.querySelectorAll('.desk-svg .char').forEach((ch,i) => {
   setTimeout(() => ch.classList.add('done'), charDelays[i]+800);
 });
 
@@ -232,6 +236,56 @@ document.querySelectorAll('.arc').forEach(arc => {
 
 setTimeout(() => { document.getElementById('logoGroup').classList.add('glow'); document.getElementById('logoGroupMob').classList.add('glow'); }, 3000);
 setTimeout(() => document.getElementById('enterBtn').classList.add('show'), 1800);
+
+// Mobile fly lines (copied from desktop, scoped to .mob-svg)
+(function(){
+  const mobSvg=document.querySelector('.mob-svg');
+  if(!mobSvg)return;
+  const mChars=mobSvg.querySelectorAll('#logoGroupMob .char');
+  const mFly=mobSvg.querySelectorAll('#decoLayerMob .fly');
+  if(!mChars.length||!mFly.length)return;
+  const mCenters=[];
+  mChars.forEach(el=>{const b=el.getBBox();mCenters.push({cx:b.x+b.width/2,cy:b.y+b.height/2});});
+  const mAssign=[];
+  mFly.forEach(line=>{
+    const pts=line.getAttribute('points').split(/[ ,]+/).map(Number);
+    let sx=0,sy=0,n=0;
+    for(let i=0;i<pts.length;i+=2){sx+=pts[i];sy+=pts[i+1];n++}
+    const mx=sx/n,my=sy/n;
+    let best=0,bestD=Infinity;
+    mCenters.forEach((c,i)=>{const d=Math.hypot(mx-c.cx,my-c.cy);if(d<bestD){bestD=d;best=i}});
+    if(!mAssign[best])mAssign[best]=[];
+    mAssign[best].push(line);
+  });
+  const mLd=[2.4,1.8,1.5,0.3,1.2,0,0.6,0.9,2.1];
+  const startT=performance.now();
+  mAssign.forEach((lines,ci)=>{
+    if(!lines)return;
+    lines.slice(0,2).forEach((line,i)=>{
+      const pts=line.getAttribute('points').split(/[ ,]+/).map(Number);
+      const fx=pts[0],fy=pts[1],lx=pts[pts.length-2],ly=pts[pts.length-1];
+      const dx=lx-fx,dy=ly-fy;
+      const len=Math.sqrt(dx*dx+dy*dy)||1;
+      const ndx=dx/len,ndy=dy/len;
+      const dist=Math.max(5000,len*0.55);
+      function fly(now){
+        const t=(now-startT-(mLd[ci]+i*0.2)*1000)/800;
+        if(t<0){requestAnimationFrame(fly);return}
+        if(t>1){line.style.opacity='0';return}
+        let pp;
+        if(t<0.1){pp=t/0.1*0.08}
+        else if(t<0.9){pp=0.08+(t-0.1)/0.8*0.84}
+        else{pp=0.92+(t-0.9)/0.1*0.08}
+        const pos=-dist+pp*dist*2;
+        line.setAttribute('transform','translate('+ndx*pos+','+ndy*pos+')');
+        line.style.opacity=t<0.08?t/0.08*0.6:t>0.85?(1-(t-0.85)/0.15)*0.6:0.6;
+        requestAnimationFrame(fly);
+      }
+      requestAnimationFrame(fly);
+    });
+  });
+})();
+
 </script>
 </body>
 </html>
