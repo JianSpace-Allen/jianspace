@@ -176,6 +176,23 @@ main.expanded .masonry::before { height:75px; }
 }
 .masonry .card:hover .overlay { opacity: 1; }
 
+/* ====== mobile ====== */
+@media (max-width:768px) {
+  aside { width:33vw; padding:1.5rem .8rem; }
+  aside h1 { font-size:1.2rem; margin-bottom:1rem; }
+  aside nav a { font-size:.85rem; padding:.35rem 0; }
+  aside nav .group-title { font-size:.8rem; padding-top:.8rem; }
+  aside nav .sub { font-size:.75rem; padding-left:.5rem; }
+  aside nav { padding-top:2.5rem; }
+  main { margin-left:33vw; }
+  main.expanded { margin-left:40px; }
+  #sidebarToggle { left:33vw; width:14px; height:44px; font-size:.55rem; }
+  #sidebarToggle.shifted { left:40px; }
+  .masonry { padding:.75rem .5rem; columns:2 160px; column-gap:.4rem; }
+  aside.collapsed #logo { left:50px; width:150px; }
+  main.expanded .masonry::before { height:50px; }
+}
+
 /* ====== lightbox ====== */
 .lightbox {
   display: none;
