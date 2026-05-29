@@ -446,14 +446,14 @@ function toggleSidebar() {
   btn.classList.toggle('shifted');
   btn.innerHTML = collapsed ? '&#9654;' : '&#9664;';
   if (collapsed) {
+    logo.style.transition = 'left 0.8s ease, width 0.8s ease';
     scrollHandler = () => {
-      const base = 40; // 2.5rem
-      const sy = window.scrollY;
-      logo.style.top = Math.max(-100, base - sy) + 'px';
+      logo.style.top = Math.max(-100, 40 - window.scrollY) + 'px';
     };
     window.addEventListener('scroll', scrollHandler, {passive:true});
   } else {
     logo.style.top = '';
+    logo.style.transition = '';
     if (scrollHandler) { window.removeEventListener('scroll', scrollHandler); scrollHandler = null; }
   }
 }
