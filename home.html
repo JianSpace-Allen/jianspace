@@ -25,11 +25,11 @@ aside {
   background: #0d0d0d;
   border-right: 1px solid #1a1a1a;
   padding: 2.5rem 1.5rem;
-  overflow: hidden;
+  overflow: visible;
   z-index: 100;
   transition: width 0.8s ease 0.1s;
 }
-aside.collapsed { width: 40px; padding: 2.5rem 0.5rem; overflow: visible; }
+aside.collapsed { width: 40px; padding: 2.5rem 0.5rem; overflow: hidden; }
 aside.collapsed nav { opacity:0; transform:translateX(-100px); pointer-events:none; width:200px; white-space:nowrap; }
 aside nav { transition:opacity 0.5s ease 0.1s, transform 0.5s ease 0.1s; }
 aside.collapsed #logo { display:none; }
