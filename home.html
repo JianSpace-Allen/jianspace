@@ -21,20 +21,20 @@ body {
 aside {
   position: fixed;
   left: 0; top: 0; bottom: 0;
-  width: 220px;
+  width: 240px;
   background: #0d0d0d;
   border-right: 1px solid #1a1a1a;
   padding: 2.5rem 1.5rem;
   overflow: hidden;
   z-index: 100;
-  transition: width 0.3s ease;
+  transition: width 0.8s ease;
 }
 aside.collapsed { width: 40px; padding: 2.5rem 0.5rem; overflow: visible; }
 aside.collapsed nav { display: none; }
-aside.collapsed #logo { position: fixed; left: 90px; top: 2.5rem; width: 276px; z-index: 105; }
+aside.collapsed #logo { left: 90px; width: 276px; }
 #sidebarToggle {
   position: fixed;
-  left: 220px;
+  left: 240px;
   top: 50%;
   transform: translateY(-50%);
   z-index: 101;
@@ -49,12 +49,12 @@ aside.collapsed #logo { position: fixed; left: 90px; top: 2.5rem; width: 276px; 
   color: #fff;
   font-size: 0.7rem;
   text-shadow: 0 0 8px #fff;
-  transition: left 0.3s ease, color 0.15s;
+  transition: left 0.8s ease, color 0.15s;
   user-select: none;
 }
 #sidebarToggle:hover { background: #a78bfa; border-color: #a78bfa; }
 #sidebarToggle.shifted { left: 40px; }
-#logo { width:190px; display:block; cursor:pointer; margin-bottom:1rem; user-select:none; filter:drop-shadow(0 0 0 transparent); transition:filter 1.8s ease; }
+#logo { position:fixed; left:1.5rem; top:2.5rem; width:190px; cursor:pointer; user-select:none; filter:drop-shadow(0 0 0 transparent); transition:filter 1.8s ease, left 0.8s ease, width 0.8s ease; z-index:105; }
 #logo .char { fill:#8B5CF6; }
 #logo.done { filter:drop-shadow(0 0 1px #fff) drop-shadow(0 0 3px #8B5CF6); }
 @keyframes breathe { 0%,100%{filter:drop-shadow(0 0 0 transparent)} 50%{filter:drop-shadow(0 0 2px #fff) drop-shadow(0 0 4px #8B5CF6) drop-shadow(0 0 8px #a78bfa)} }
@@ -80,6 +80,7 @@ aside h1 {
   transition: color 0.15s;
 }
 aside h1:hover { color: #b794f6; }
+aside nav { padding-top: 3.5rem; }
 aside nav a {
   display: block;
   color: #666;
@@ -107,14 +108,15 @@ aside nav .sub {
 
 /* ====== main ====== */
 main {
-  margin-left: 220px;
+  margin-left: 240px;
   flex: 1;
   display: flex;
   flex-direction: column;
-  transition: margin-left 0.3s ease;
+  transition: margin-left 0.8s ease;
 }
 main.expanded { margin-left: 40px; }
-main.expanded .masonry::before { content:''; display:block; height:75px; }
+.masonry::before { content:''; display:block; height:0; transition:height 0.8s ease; }
+main.expanded .masonry::before { height:75px; }
 
 /* ====== theme bar ====== */
 #themeBar {
@@ -413,14 +415,27 @@ sidebarLinks.forEach(a => {
 });
 
 // ====== Sidebar toggle ======
+let scrollHandler = null;
 function toggleSidebar() {
+  const btn = document.getElementById('sidebarToggle');
   const aside = document.querySelector('aside');
   const main = document.querySelector('main');
-  const btn = document.getElementById('sidebarToggle');
-  aside.classList.toggle('collapsed');
+  const logo = document.getElementById('logo');
+  const collapsed = aside.classList.toggle('collapsed');
   main.classList.toggle('expanded');
   btn.classList.toggle('shifted');
-  btn.innerHTML = aside.classList.contains('collapsed') ? '&#9654;' : '&#9664;';
+  btn.innerHTML = collapsed ? '&#9654;' : '&#9664;';
+  if (collapsed) {
+    scrollHandler = () => {
+      const base = 40; // 2.5rem
+      const sy = window.scrollY;
+      logo.style.top = Math.max(-100, base - sy) + 'px';
+    };
+    window.addEventListener('scroll', scrollHandler, {passive:true});
+  } else {
+    logo.style.top = '';
+    if (scrollHandler) { window.removeEventListener('scroll', scrollHandler); scrollHandler = null; }
+  }
 }
 
 // initial render
