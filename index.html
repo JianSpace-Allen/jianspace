@@ -9,6 +9,7 @@
 body { background:#0a0a0a; min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; overflow:hidden; font-family:"Smiley Sans Oblique",sans-serif; }
 svg { width:95vw; }
 @media (max-width:768px) { svg { width:98vw; } .btn { padding:.5rem 1.5rem; font-size:.85rem; bottom:10vh; } }
+.char { fill:#0a0a0a; stroke:#fff; stroke-width:4; stroke-linecap:round; stroke-linejoin:round; animation:draw 0.8s ease forwards; }
 .char:nth-child(1){animation-delay:2.4s}
 .char:nth-child(2){animation-delay:1.8s}
 .char:nth-child(3){animation-delay:1.5s}
@@ -126,12 +127,12 @@ function animateFlyLine(line, delay, dur) {
     if (t < 0) { requestAnimationFrame(fly); return; }
     if (t > 1) { line.style.opacity = '0'; return; }
     let pp;
-    if (t < 0.15) { pp = t / 0.15 * 0.12; }
-    else if (t < 0.85) { pp = 0.12 + (t-0.15)/0.7 * 0.76; }
-    else { pp = 0.88 + (t-0.85)/0.15 * 0.12; }
+    if (t < 0.1) { pp = t / 0.1 * 0.08; }
+    else if (t < 0.9) { pp = 0.08 + (t-0.1)/0.8 * 0.84; }
+    else { pp = 0.92 + (t-0.9)/0.1 * 0.08; }
     const pos = -dist + pp * dist * 2;
     line.setAttribute('transform', `translate(${ndx*pos},${ndy*pos})`);
-    line.style.opacity = t < 0.1 ? t/0.1*0.6 : t > 0.8 ? (1-(t-0.8)/0.2)*0.6 : 0.6;
+    line.style.opacity = t < 0.08 ? t/0.08*0.6 : t > 0.85 ? (1-(t-0.85)/0.15)*0.6 : 0.6;
     requestAnimationFrame(fly);
   }
   requestAnimationFrame(fly);
@@ -164,7 +165,7 @@ const lDelays = [2400,1800,1500,300,1200,0,600,900,2100];
 lineAssignments.forEach((lines, ci) => {
   if (!lines) return;
   lines.slice(0,3).forEach((line,i) => {
-    animateFlyLine(line, lDelays[ci] + i*200, 800);
+    animateFlyLine(line, lDelays[ci] + i*75, 750);
   });
 });
 
