@@ -292,7 +292,7 @@ setTimeout(() => document.getElementById('enterBtn').classList.add('show'), 1800
   const startT=performance.now();
   mAssign.forEach((lines,ci)=>{
     if(!lines)return;
-    lines.slice(0,2).forEach((line,i)=>{
+    lines.slice(0,4).forEach((line,i)=>{
       const pts=line.getAttribute('points').split(/[ ,]+/).map(Number);
       const fx=pts[0],fy=pts[1],lx=pts[pts.length-2],ly=pts[pts.length-1];
       const dx=lx-fx,dy=ly-fy;
