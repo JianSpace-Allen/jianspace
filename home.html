@@ -347,10 +347,17 @@ function getFiltered() {
       imgPath(d).forEach(p => photos.push({ src: p, model: d.model, theme: d.theme, colors: d.colors }));
     }
   });
-  // shuffle
-  for (let i = photos.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [photos[i], photos[j]] = [photos[j], photos[i]];
+  if (activeTheme === 'all') {
+    for (let i = photos.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [photos[i], photos[j]] = [photos[j], photos[i]];
+    }
+  } else {
+    photos.sort((a, b) => {
+      const na = parseInt(a.src.match(/(\d+)\.webp/)?.[1] || 0);
+      const nb = parseInt(b.src.match(/(\d+)\.webp/)?.[1] || 0);
+      return na - nb;
+    });
   }
   return photos;
 }
