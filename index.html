@@ -15,7 +15,7 @@ svg, .btn { z-index:1; }
 .mob-svg .char.done { stroke:#8B5CF6; transition:stroke 0.5s; }
 .mob-svg .char.glow { -webkit-filter:drop-shadow(0 0 12px #8B5CF6); filter:drop-shadow(0 0 12px #8B5CF6); transition:filter 0.5s; }
 .mob-svg .fly { fill:none; stroke:#fff; stroke-width:5; stroke-linecap:round; stroke-linejoin:round; opacity:0; }
-.mob-svg .arc { fill:none; stroke:#fff; stroke-width:3; stroke-linecap:round; stroke-linejoin:round; }
+.mob-svg .arc { fill:none; stroke:#fff; stroke-width:3; stroke-linecap:round; stroke-linejoin:round; opacity:0; }
 .mob-svg .char:nth-child(1){animation-delay:2.6s}
 .mob-svg .char:nth-child(2){animation-delay:2.0s}
 .mob-svg .char:nth-child(3){animation-delay:1.7s}
@@ -332,7 +332,7 @@ setTimeout(() => document.getElementById('enterBtn').classList.add('show'), 3200
 (function(){
   const mChars=document.querySelectorAll('#logoGroupMob .char');
   if(!mChars.length)return;
-  const mCharDelays=[2600,2000,1700,500,1400,200,800,1100,2300];
+  const mCharDelays=[2800,2200,1900,700,1600,400,1000,1300,2500];
 
   mChars.forEach((el,i)=>{
     let len=0;
@@ -400,7 +400,7 @@ setTimeout(() => document.getElementById('enterBtn').classList.add('show'), 3200
     let best=0,bestD=Infinity;
     mCharCenters.forEach((c,i)=>{const d=Math.hypot(ax-c.cx,ay-c.cy);if(d<bestD){bestD=d;best=i;}});
     const charStart=mCharDelays[best];
-    const arcStart=Math.max(0,charStart-400);
+    const arcStart=Math.max(400,charStart-400);
     function animArc(now){
       const elapsed=now-startT-arcStart;
       if(elapsed<0){requestAnimationFrame(animArc);return;}
@@ -413,7 +413,7 @@ setTimeout(() => document.getElementById('enterBtn').classList.add('show'), 3200
     requestAnimationFrame(animArc);
   });
 
-  setTimeout(()=>{mChars.forEach(ch=>ch.classList.add('glow'));document.getElementById('logoGroupMob').classList.add('glow');},3450);
+  setTimeout(()=>{mChars.forEach(ch=>ch.classList.add('glow'));document.getElementById('logoGroupMob').classList.add('glow');},3650);
 })();
 
 </script>
