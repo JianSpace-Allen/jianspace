@@ -16,6 +16,8 @@ svg, .btn { z-index:1; }
 .mob-svg .char { animation:draw 0.8s ease forwards; }
 .mob-svg .char.done { stroke:#8B5CF6; transition:stroke 0.5s; }
 .mob-svg .char.glow { -webkit-filter:drop-shadow(0 0 12px #8B5CF6); filter:drop-shadow(0 0 12px #8B5CF6); transition:filter 0.5s; }
+.mob-svg .fly { fill:none; stroke:#fff; stroke-width:5; stroke-linecap:round; stroke-linejoin:round; opacity:0; }
+.mob-svg .arc { fill:none; stroke:#fff; stroke-width:3; stroke-linecap:round; stroke-linejoin:round; }
 .mob-svg .char:nth-child(1){animation-delay:2.6s}
 .mob-svg .char:nth-child(2){animation-delay:2.0s}
 .mob-svg .char:nth-child(3){animation-delay:1.7s}
@@ -265,25 +267,92 @@ setTimeout(() => document.getElementById('enterBtn').classList.add('show'), 3200
   D();
 })();
 
-// Mobile char stroke animation
+// Mobile char + fly + arc animation (5/30 定稿)
 (function(){
   const mChars=document.querySelectorAll('#logoGroupMob .char');
   if(!mChars.length)return;
-  mChars.forEach(el=>{
+  const mCharDelays=[2600,2000,1700,500,1400,200,800,1100,2300];
+
+  mChars.forEach((el,i)=>{
     let len=0;
     if(el.tagName==='path')len=el.getTotalLength();
     else if(el.tagName==='polygon'){
       const pts=el.getAttribute('points').split(/[ ,]+/).map(Number);
-      for(let i=0;i<pts.length-2;i+=2)len+=Math.hypot(pts[i+2]-pts[i],pts[i+3]-pts[i+1]);
+      for(let j=0;j<pts.length-2;j+=2)len+=Math.hypot(pts[j+2]-pts[j],pts[j+3]-pts[j+1]);
       len+=Math.hypot(pts[0]-pts[pts.length-2],pts[1]-pts[pts.length-1]);
     }
     el.setAttribute('stroke-dasharray',len);
     el.setAttribute('stroke-dashoffset',len);
+    el.style.animationDelay=mCharDelays[i]+'ms';
+    setTimeout(()=>el.classList.add('done'),mCharDelays[i]+800);
   });
-  const mCharDelays=[2600,2000,1700,500,1400,200,800,1100,2300];
-  mChars.forEach((ch,i)=>{setTimeout(()=>ch.classList.add('done'),mCharDelays[i]+800)});
-  // Glow after last letter (J: 2600+800=3400ms)
-  setTimeout(()=>mChars.forEach(ch=>ch.classList.add('glow')),3450);
+
+  function animateFlyLine(line,delay,dur){
+    const pts=line.getAttribute('points').split(/[ ,]+/).map(Number);
+    const fx=pts[0],fy=pts[1],lx=pts[pts.length-2],ly=pts[pts.length-1];
+    const dx=lx-fx,dy=ly-fy;
+    const len=Math.sqrt(dx*dx+dy*dy)||1;
+    const ndx=dx/len,ndy=dy/len;
+    const dist=5000;
+    function fly(now){
+      const t=(now-startT-delay)/dur;
+      if(t<0){requestAnimationFrame(fly);return;}
+      if(t>1){line.style.opacity='0';return;}
+      let pp;
+      if(t<0.05){pp=t/0.05*0.03;}
+      else if(t<0.95){pp=0.03+(t-0.05)/0.9*0.94;}
+      else{pp=0.97+(t-0.95)/0.05*0.03;}
+      const pos=-dist+pp*dist*2;
+      line.setAttribute('transform','translate('+(ndx*pos)+','+(ndy*pos)+')');
+      line.style.opacity=t<0.04?t/0.04*0.6:t>0.92?(1-(t-0.92)/0.08)*0.6:0.6;
+      requestAnimationFrame(fly);
+    }
+    requestAnimationFrame(fly);
+  }
+
+  const mCharCenters=[];
+  mChars.forEach(el=>{const b=el.getBBox();mCharCenters.push({cx:b.x+b.width/2,cy:b.y+b.height/2});});
+
+  const mLineAssignments=Array.from({length:9},()=>[]);
+  document.querySelectorAll('#decoLayerMob .fly').forEach(line=>{
+    const pts=line.getAttribute('points').split(/[ ,]+/).map(Number);
+    let sx=0,sy=0,n=0;
+    for(let i=0;i<pts.length;i+=2){sx+=pts[i];sy+=pts[i+1];n++;}
+    const mx=sx/n,my=sy/n;
+    let best=0,bestD=Infinity;
+    mCharCenters.forEach((c,i)=>{const d=Math.hypot(mx-c.cx,my-c.cy);if(d<bestD){bestD=d;best=i;}});
+    mLineAssignments[best].push(line);
+  });
+
+  mLineAssignments.forEach((lines,ci)=>{
+    if(!lines.length)return;
+    lines.slice(0,3).forEach((line,i)=>{animateFlyLine(line,mCharDelays[ci]+i*75,750);});
+  });
+
+  document.querySelectorAll('#decoLayerMob .arc').forEach(arc=>{
+    const len=arc.getTotalLength();
+    arc.setAttribute('stroke-dasharray',len);
+    arc.setAttribute('stroke-dashoffset',len);
+    arc.style.opacity='0';
+    const b=arc.getBBox();
+    const ax=b.x+b.width/2,ay=b.y+b.height/2;
+    let best=0,bestD=Infinity;
+    mCharCenters.forEach((c,i)=>{const d=Math.hypot(ax-c.cx,ay-c.cy);if(d<bestD){bestD=d;best=i;}});
+    const charStart=mCharDelays[best];
+    const arcStart=Math.max(0,charStart-400);
+    function animArc(now){
+      const elapsed=now-startT-arcStart;
+      if(elapsed<0){requestAnimationFrame(animArc);return;}
+      const t=Math.min(1,elapsed/400);
+      arc.setAttribute('stroke-dashoffset',len*(1-t));
+      arc.style.opacity=t<0.2?t/0.2:0.8;
+      if(t<1)requestAnimationFrame(animArc);
+      else{arc.style.opacity='0';arc.style.transition='opacity 0.3s';}
+    }
+    requestAnimationFrame(animArc);
+  });
+
+  setTimeout(()=>{mChars.forEach(ch=>ch.classList.add('glow'));document.getElementById('logoGroupMob').classList.add('glow');},3450);
 })();
 
 </script>
