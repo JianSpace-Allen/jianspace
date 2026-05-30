@@ -311,10 +311,10 @@ const data = [
   { model:'胜利鸟', slug:'victorybird-diga', theme:'迪迦', colors:'荧光绿', files:1 },
   { model:'胜利鸟', slug:'victorybird-diga', theme:'迪迦', colors:'韩国粉', files:1 },
   // 3D打印
-  { model:'装/调车盒', slug:'car-box', name:'装调车盒', theme:'TAMIYA', colors:'粉紫', files:5 },
-  { model:'装/调车盒', slug:'car-box', name:'装调车盒', theme:'TAMIYA', colors:'粉蓝', files:5 },
-  { model:'装/调车盒', slug:'car-box', name:'装调车盒', theme:'TAMIYA', colors:'红蓝', files:5 },
-  { model:'装/调车盒', slug:'car-box', name:'装调车盒', theme:'TAMIYA', colors:'黑银', files:5 },
+  { model:'装/调车盒', slug:'car-box', name:'装调车盒', theme:'TAMIYA', colors:'粉紫', files:5, nums:[1,3,4,5,6] },
+  { model:'装/调车盒', slug:'car-box', name:'装调车盒', theme:'TAMIYA', colors:'粉蓝', files:5, nums:[1,3,4,5,6] },
+  { model:'装/调车盒', slug:'car-box', name:'装调车盒', theme:'TAMIYA', colors:'红蓝', files:5, nums:[1,3,4,5,6] },
+  { model:'装/调车盒', slug:'car-box', name:'装调车盒', theme:'TAMIYA', colors:'黑银', files:5, nums:[1,3,4,5,6] },
   { model:'装/调车盒', slug:'car-box', name:'装调车盒', theme:'NBA-JAMES', colors:'湖人', files:5 },
   { model:'装/调车盒', slug:'car-box', name:'装调车盒', theme:'NBA-JAMES', colors:'热火', files:5 },
   { model:'装/调车盒', slug:'car-box', name:'装调车盒', theme:'NBA-JAMES', colors:'骑士红蓝', files:5 },
@@ -326,7 +326,8 @@ function imgPath(d) {
   const c = d.colors;
   const slug = d.slug || d.model;
   const base = `images/${slug}/${d.name||d.model}-${t}-${c}`;
-  return Array.from({length: d.files}, (_,i) => `${base}${i+1}.webp?v=2`);
+  const nums = d.nums || Array.from({length: d.files}, (_,i) => i+1);
+  return nums.map(n => `${base}${n}.webp?v=2`);
 }
 
 // ====== STATE ======
